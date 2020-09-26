@@ -2,7 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 
 import { Colors, FontSize } from '../config/ui';
 import { button } from './components/button';
-import { question } from './components/question';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -40,5 +39,4 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ${button}
-  ${question}
 `;

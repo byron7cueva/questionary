@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-
-import { Question } from '../types/Question';
-import { RiDeleteBin5Line } from 'react-icons/ri';
-import { TiEdit } from 'react-icons/ti';
 import { FiSave } from 'react-icons/fi';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { TextArea } from './TextArea';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import { TiEdit } from 'react-icons/ti';
+
+import { QuestionItemContainer } from './style';
+import { TextArea } from '../TextArea';
+import { Question } from '../../types/Question';
 
 export const QuestionItem = ({ question, answere}: Question): JSX.Element => {
   const [isEditable, setEditable] = useState(false);
@@ -29,7 +30,7 @@ export const QuestionItem = ({ question, answere}: Question): JSX.Element => {
   }
 
   return (
-    <div className="question">
+    <QuestionItemContainer>
       <div className="question__container">
         {
           isEditable ? 
@@ -85,6 +86,6 @@ export const QuestionItem = ({ question, answere}: Question): JSX.Element => {
           )
         }
       </div>
-    </div>
+    </QuestionItemContainer>
   );
 }
