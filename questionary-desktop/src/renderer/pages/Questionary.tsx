@@ -2,7 +2,7 @@ import React from 'react';
 
 import { QuestionItem } from '../components/QuestionItem';
 
-const Subject = (): JSX.Element => (
+const Questionary = (): JSX.Element => (
   <div>
     <header>
       <h3>Cuestionario</h3>
@@ -20,5 +20,5 @@ const Subject = (): JSX.Element => (
 );
 
 export {
-  Subject
+  Questionary
 }
