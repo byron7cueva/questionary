@@ -1,3 +1,4 @@
+import './assets/css/index.css';
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 

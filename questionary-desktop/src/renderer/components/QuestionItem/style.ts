@@ -15,6 +15,12 @@ export const QuestionItemContainer = styled.div`
     }
   }
 
+  &.isEdit {
+    .question__actions {
+      visibility: initial;
+    }
+  }
+
   
   .question__container {
     padding: 1em;

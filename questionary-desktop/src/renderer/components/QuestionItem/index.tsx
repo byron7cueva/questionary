@@ -30,7 +30,7 @@ export const QuestionItem = ({ question, answere}: Question): JSX.Element => {
   }
 
   return (
-    <QuestionItemContainer>
+    <QuestionItemContainer className={`${isEditable ? 'isEdit' : ''}`}>
       <div className="question__container">
         {
           isEditable ? 
