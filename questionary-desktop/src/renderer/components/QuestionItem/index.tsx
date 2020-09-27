@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 
 import { TextArea } from '../TextArea';
 import { ItemContainer } from '../ItemContainer';
+import { Question } from '../../types/Question';
 
-export const QuestionItem = (props: any): JSX.Element => {
+export interface QuestionItemProps {
+  data: Question,
+  isEditable?: boolean
+}
+
+export const QuestionItem = ({data: {question, answere}, isEditable}: QuestionItemProps): JSX.Element => {
   const [editing, setEditing] = useState(false);
-  const [questionEdit, setQuestionEdit] = useState(props.data.question);
-  const [answereEdit, setAnswereEdit] = useState(props.data.answere);
+  const [questionEdit, setQuestionEdit] = useState(question);
+  const [answereEdit, setAnswereEdit] = useState(answere);
 
   const handleClickEditable = () => {
     if (editing) {
-      setQuestionEdit(props.data.question);
-      setAnswereEdit(props.data.answere);
+      setQuestionEdit(question);
+      setAnswereEdit(answere);
     }
     setEditing(!editing);
   }
@@ -28,7 +34,7 @@ export const QuestionItem = (props: any): JSX.Element => {
     <ItemContainer
       editing={editing}
       onClickEdit={handleClickEditable}
-      isEditable={props.isEditable}
+      isEditable={isEditable}
     >
       <TextArea
           name="question"
