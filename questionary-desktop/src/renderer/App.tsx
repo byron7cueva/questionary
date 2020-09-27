@@ -10,9 +10,9 @@ import { Search } from './pages/Search';
 const App = (): JSX.Element => (
   <MemoryRouter>
     <GlobalStyle />
-    <Route exact path="/course" component={Search} />
-    <Route exact path="/" component={Courses} />
-    <Route exact path="/asas" component={Course}/>
+    <Route exact path="/" component={Search} />
+    <Route exact path="/courses" component={Courses} />
+    <Route exact path="/courses/:idCourse" component={Course}/>
   </MemoryRouter>
 );
 
