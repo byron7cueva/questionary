@@ -1,16 +1,25 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Colors } from '../../config/ui';
 
-export const TextAreaContainer = styled.textarea`
-    resize: none;
+const baseInput = css`
     display:block;
     width: 100%;
-    outline: none;
-    overflow: hidden;
+    margin-bottom: 1em;
     background-color: transparent;
     border: none;
-    border-bottom: 0.1px dashed #6272a4;
-    color: ${Colors.Light};
-    padding: 0 0.5em;
+    border-bottom: 0.1px dashed transparent;
+    padding: 0;
 `;
+
+export const Editable = styled.textarea`
+    ${baseInput}
+    resize: none;
+    overflow: hidden;
+    border-color: #6272a4;
+    color: ${Colors.Light};
+`;
+
+export const ReadOnly = styled.p`
+    ${baseInput}
+`

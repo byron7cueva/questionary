@@ -4,8 +4,10 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
 
+import { ActionsContainer } from './style';
+
 export const Actions = (props: any) => (
-  <div className="question__actions">
+  <ActionsContainer className={props.className}>
     {
       props.editing && (
         <button className="btn btn-circle btn-cyan">
@@ -26,5 +28,5 @@ export const Actions = (props: any) => (
         </button>
       )
     }
-  </div>
+  </ActionsContainer>
 );

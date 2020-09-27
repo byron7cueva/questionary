@@ -1,13 +1,15 @@
 enum Colors {
   Background = '#282a36',
-  Light = '#f8f8f2',
   Dark = '#44475a',
+  Light = '#f8f8f2',
   Comment = '#6272a4',
+  Cyan = '#8be9fd',
   Green = '#50fa7b',
-  Red = '#ff5555',
-  Pink = '#ff79c6',
   Orange = '#ffb86c',
-  Cyan = '#8be9fd'
+  Pink = '#ff79c6',
+  Purple = '#bd93f9',
+  Red = '#ff5555',
+  Yellow = '#f1fa8c'
 }
 
 enum FontSize {

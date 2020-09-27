@@ -3,16 +3,17 @@ import {css} from 'styled-components';
 import { Colors } from '../../config/ui';
 
 export const input = css`
-  textarea {
-    resize: none;
+  textarea, input {
     display:block;
     width: 100%;
     outline: none;
-    overflow: hidden;
     background-color: transparent;
-    border: none;
-    border-bottom: 0.1px dashed #6272a4;
     color: ${Colors.Light};
-    padding: 0 0.5em;
+  }
+
+  input {
+    padding: 0.5em 1em;
+    border: 1px solid ${Colors.Purple};
+    border-radius: 8px;
   }
 `;

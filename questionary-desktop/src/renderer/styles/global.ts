@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import { Colors, FontSize } from '../config/ui';
 import { button } from './components/button';
+import { input } from './components/input';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -14,13 +15,12 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${FontSize.P};
   }
 
-  h1, h2, h3, h4, h5 {
+  h1, h2, h3, h4, h5, p {
     margin: 0;
   }
 
   h1 {
     font-size: ${FontSize.h1};
-    margin-bottom: 1em;
   }
 
   h2 {
@@ -39,4 +39,5 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ${button}
+  ${input}
 `;

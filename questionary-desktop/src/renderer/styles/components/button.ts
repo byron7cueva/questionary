@@ -4,7 +4,7 @@ import { Colors } from '../../config/ui';
 
 export const button = css`
   .btn {
-    padding: 0.7em;
+    padding: 0.4em 0.6em;
     font-weight: bold;
     outline: none;
     border: none;
