@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "questionary-desktop"
+		},
+		{
+			"path": "questionary-mock-api"
 		}
 	],
 	"settings": {}

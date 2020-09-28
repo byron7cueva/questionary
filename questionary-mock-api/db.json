@@ -1,0 +1,68 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "idCourse": 1,
+      "name": "Materia 1",
+      "questions": [
+        {
+          "idQuestion": 1,
+          "idCourse": 1,
+          "question": "Prueba de pregunta 1",
+          "answere": "Prueba de respueta 1"
+        },
+        {
+          "idQuestion": 2,
+          "idCourse": 1,
+          "question": "Prueba de pregunta 2",
+          "answere": "Prueba de respueta 2"
+        }    
+      ]
+    },
+    {
+      "id": 2,
+      "idCourse": 2,
+      "name": "Materia 2",
+      "questions": [
+        {
+          "idQuestion": 3,
+          "idCourse": 2,
+          "question": "Prueba de pregunta 3",
+          "answere": "Prueba de respueta 3"
+        },
+        {
+          "idQuestion": 4,
+          "idCourse": 2,
+          "question": "Prueba de pregunta 4",
+          "answere": "Prueba de respueta 4"
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "idQuestion": 1,
+      "idCourse": 1,
+      "question": "Prueba de pregunta 1",
+      "answere": "Prueba de respueta 1"
+    },
+    {
+      "idQuestion": 2,
+      "idCourse": 1,
+      "question": "Prueba de pregunta 2",
+      "answere": "Prueba de respueta 2"
+    },
+    {
+      "idQuestion": 3,
+      "idCourse": 2,
+      "question": "Prueba de pregunta 3",
+      "answere": "Prueba de respueta 3"
+    },
+    {
+      "idQuestion": 4,
+      "idCourse": 2,
+      "question": "Prueba de pregunta 4",
+      "answere": "Prueba de respueta 4"
+    }
+  ]
+}
