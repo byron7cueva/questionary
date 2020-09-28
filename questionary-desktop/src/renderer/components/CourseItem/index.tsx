@@ -21,16 +21,13 @@ export const CourseItem = (props: CourseItemProps) => {
   const [editing, setEditing] = useState(isEditing);
   const [name, setName] = useState(props.data.name);
 
-  const hadleClickEdit = () => {
-    if (editing) {
-      setName(props.data.name);
-    }
-    
+  const hadleClickEdit = () => {    
     setEditing(true);
   }
 
   const handleClickCancelEdit = () => {
     setEditing(false);
+    setName(props.data.name);
     if (props.onClickCancelEdit) {
       props.onClickCancelEdit(); 
     }
