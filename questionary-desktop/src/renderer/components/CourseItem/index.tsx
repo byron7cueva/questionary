@@ -8,13 +8,17 @@ import { Course } from '../../types/Course';
 export interface CourseItemProps {
   data: Course;
   isEditable: boolean;
-  onClickQuestionary: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickSave: (course: Course) => void;
-  onClickDelete: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  editing?: boolean;
+  hideOptionsCourse?: boolean;
+  onClickQuestionary?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickSave?: (course: Course) => void;
+  onClickDelete?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickCancelEdit?: () => void;
 }
 
 export const CourseItem = (props: CourseItemProps) => {
-  const [editing, setEditing] = useState(false);
+  const isEditing = props.isEditable && props.editing;
+  const [editing, setEditing] = useState(isEditing);
   const [name, setName] = useState(props.data.name);
 
   const hadleClickEdit = () => {
@@ -22,7 +26,14 @@ export const CourseItem = (props: CourseItemProps) => {
       setName(props.data.name);
     }
     
-    setEditing(!editing);
+    setEditing(true);
+  }
+
+  const handleClickCancelEdit = () => {
+    setEditing(false);
+    if (props.onClickCancelEdit) {
+      props.onClickCancelEdit(); 
+    }
   }
 
   const handleChange = (event: any) => {
@@ -38,6 +49,7 @@ export const CourseItem = (props: CourseItemProps) => {
       name
     };
     props.onClickSave(course);
+    setEditing(false);
   }
 
   return (
@@ -47,6 +59,7 @@ export const CourseItem = (props: CourseItemProps) => {
       onClickEdit={hadleClickEdit}
       onClickSave={handleClickSave}
       onClickDelete={props.onClickDelete}
+      onClickCancelEdit={handleClickCancelEdit}
     >
       <TextArea
         name="name"
@@ -56,14 +69,18 @@ export const CourseItem = (props: CourseItemProps) => {
         editing={editing}
         fontSize={17}
       />
-      <CourseOptions>
-        <button
-          className="btn btn-green"
-          onClick={props.onClickQuestionary}
-        >
-          Cuestionario
-        </button>
-      </CourseOptions>
+      {
+        !props.hideOptionsCourse && (
+          <CourseOptions>
+            <button
+              className="btn btn-green"
+              onClick={props.onClickQuestionary}
+            >
+              Cuestionario
+            </button>
+          </CourseOptions>   
+        )
+      }
     </ItemContainer>
   );
 }

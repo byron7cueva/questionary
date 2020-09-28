@@ -10,6 +10,7 @@ export interface ItemContainerProps {
   onClickEdit?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onClickSave?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onClickDelete?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickCancelEdit?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const ItemContainer = (props: ItemContainerProps) => (
@@ -25,6 +26,7 @@ export const ItemContainer = (props: ItemContainerProps) => (
           onClickEdit={props.onClickEdit}
           onClickSave={props.onClickSave}
           onClickDelete={props.onClickDelete}
+          onClickCancelEdit={props.onClickCancelEdit}
         />
       )
     }
