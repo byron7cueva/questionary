@@ -3,7 +3,14 @@ import React from 'react';
 import { Container, Item } from './style';
 import { Actions } from '../Actions';
 
-export const ItemContainer = (props: any) => (
+export interface ItemContainerProps {
+  editing: boolean;
+  children: any;
+  isEditable: boolean;
+  onClickEdit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+export const ItemContainer = (props: ItemContainerProps) => (
   <Item className={`${props.editing ? 'isEdit' : ''}`}>
     <Container className="item__container">
       {props.children}

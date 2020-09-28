@@ -6,7 +6,13 @@ import { TiEdit } from 'react-icons/ti';
 
 import { ActionsContainer } from './style';
 
-export const Actions = (props: any) => (
+export interface ActionsProps {
+  className: string;
+  editing: boolean;
+  onClickEdit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+export const Actions = (props: ActionsProps) => (
   <ActionsContainer className={props.className}>
     {
       props.editing && (

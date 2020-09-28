@@ -38,7 +38,6 @@ export const QuestionItem = ({data, isEditable}: QuestionItemProps): JSX.Element
     >
       <TextArea
           name="question"
-          className="question__title"
           placeholder="Pregunta"
           value={questionEdit}
           onChange={handleChangeEdit}
@@ -47,7 +46,6 @@ export const QuestionItem = ({data, isEditable}: QuestionItemProps): JSX.Element
         />
         <TextArea
           name="answere"
-          className="question__answere"
           placeholder="Respuesta"
           value={answereEdit}
           onChange={handleChangeEdit}

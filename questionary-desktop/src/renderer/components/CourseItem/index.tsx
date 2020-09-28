@@ -3,8 +3,15 @@ import React, { useState } from 'react';
 import { ItemContainer } from '../ItemContainer';
 import { TextArea } from '../TextArea';
 import { CourseOptions } from './style';
+import { Course } from '../../types/Course';
 
-export const CourseItem = (props: any) => {
+export interface CourseItemProps {
+  data: Course;
+  isEditable: boolean;
+  onClickQuestionary: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+export const CourseItem = (props: CourseItemProps) => {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(props.data.name);
 

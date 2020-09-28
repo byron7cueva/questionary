@@ -2,7 +2,13 @@ import React from 'react';
 
 import { HeaderContainer } from './style';
 
-export const Header = (props: any) => (
+export interface HeaderProps {
+  title: string;
+  subTitle: string;
+  children?: any;
+}
+
+export const Header = (props: HeaderProps) => (
   <HeaderContainer>
     <header>
       <h3>{props.subTitle}</h3>

@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 
 import { Editable, ReadOnly } from './style';
-import { FontSize } from '../../config/ui';
 
 const INTERLINE = 6;
 
-export const TextArea = (props: any) => {
-  const size = props.fontSize ? props.fontSize : FontSize.P;
-  const initialHeight = size + INTERLINE;
+export interface TextAreaProps {
+  fontSize: number;
+  editing: boolean;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+export const TextArea = (props: TextAreaProps) => {
+  const initialHeight = props.fontSize + INTERLINE;
   const [height, setHeight] = useState(initialHeight);
 
   const handleInput = (event: any) => {
@@ -27,7 +34,6 @@ export const TextArea = (props: any) => {
       props.editing ? (
         <Editable
           name={props.name}
-          className={props.className}
           onInput={handleInput}
           placeholder={props.placeholder}
           value={props.value}
@@ -35,15 +41,14 @@ export const TextArea = (props: any) => {
           rows={1}
           style={{
             height:`${height}px`,
-            fontSize: `${size}px`
+            fontSize: `${props.fontSize}px`
           }}
         />
       ) : (
         <ReadOnly
-          className={props.className}
           style={{
             height:`${height}px`,
-            fontSize: `${size}px`
+            fontSize: `${props.fontSize}px`
           }}
         >
           {props.value}
