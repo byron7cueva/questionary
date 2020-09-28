@@ -9,15 +9,15 @@ export interface QuestionItemProps {
   isEditable?: boolean
 }
 
-export const QuestionItem = ({data: {question, answere}, isEditable}: QuestionItemProps): JSX.Element => {
+export const QuestionItem = ({data, isEditable}: QuestionItemProps): JSX.Element => {
   const [editing, setEditing] = useState(false);
-  const [questionEdit, setQuestionEdit] = useState(question);
-  const [answereEdit, setAnswereEdit] = useState(answere);
+  const [questionEdit, setQuestionEdit] = useState(data.question);
+  const [answereEdit, setAnswereEdit] = useState(data.answere);
 
   const handleClickEditable = () => {
     if (editing) {
-      setQuestionEdit(question);
-      setAnswereEdit(answere);
+      setQuestionEdit(data.question);
+      setAnswereEdit(data.answere);
     }
     setEditing(!editing);
   }
