@@ -7,7 +7,9 @@ export interface ItemContainerProps {
   editing: boolean;
   children: any;
   isEditable: boolean;
-  onClickEdit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickEdit?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickSave?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickDelete?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const ItemContainer = (props: ItemContainerProps) => (
@@ -19,8 +21,10 @@ export const ItemContainer = (props: ItemContainerProps) => (
       props.isEditable && (
         <Actions
           editing={props.editing}
-          onClickEdit={props.onClickEdit}
           className="item__actions"
+          onClickEdit={props.onClickEdit}
+          onClickSave={props.onClickSave}
+          onClickDelete={props.onClickDelete}
         />
       )
     }

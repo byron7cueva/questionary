@@ -10,13 +10,15 @@ export interface ActionsProps {
   className: string;
   editing: boolean;
   onClickEdit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickSave: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickDelete: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const Actions = (props: ActionsProps) => (
   <ActionsContainer className={props.className}>
     {
       props.editing && (
-        <button className="btn btn-circle btn-cyan">
+        <button className="btn btn-circle btn-cyan" onClick={props.onClickSave}>
           <FiSave size={40} />
         </button>
       )
@@ -29,7 +31,7 @@ export const Actions = (props: ActionsProps) => (
     </button>
     {
       !props.editing && (
-        <button className="btn btn-circle btn-red">
+        <button className="btn btn-circle btn-red" onClick={props.onClickDelete}>
           <RiDeleteBin5Line size={40}/>
         </button>
       )

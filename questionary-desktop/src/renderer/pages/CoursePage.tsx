@@ -36,6 +36,14 @@ export const CoursePage = (): JSX.Element => {
     }
   }, []);
 
+  const handleClickDeleteItem = (question: Question) => {
+    console.log('Delete question', question);
+  }
+
+  const handleClickSaveItem = (question: Question) => {
+    console.log('Save question', question);
+  }
+
   return (
     <Layout>
       {
@@ -55,6 +63,8 @@ export const CoursePage = (): JSX.Element => {
                     key={item.idQuestion}
                     data={{...item}}
                     isEditable={true}
+                    onClickDelete={() => handleClickDeleteItem(item)}
+                    onClickSave={handleClickSaveItem}
                   />
                 ))
               }

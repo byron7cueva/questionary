@@ -24,6 +24,14 @@ export const CoursesList = () => {
     history.push(`/courses/${idCourse}`);
   }
 
+  const handleClickSaveItem = (course: Course) => {
+    console.log('Save', course);
+  }
+
+  const handleClickDeteleItem = (course: Course) => {
+    console.log('Dete', course);
+  }
+
   return (
     <>
       <Options>
@@ -37,6 +45,8 @@ export const CoursesList = () => {
               data={{...item}}
               isEditable={true}
               onClickQuestionary={() => handleClickQuestionary(item.idCourse)}
+              onClickSave={handleClickSaveItem}
+              onClickDelete={() => handleClickDeteleItem(item)}
             />
           ))
         }

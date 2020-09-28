@@ -9,6 +9,8 @@ export interface CourseItemProps {
   data: Course;
   isEditable: boolean;
   onClickQuestionary: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickSave: (course: Course) => void;
+  onClickDelete: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const CourseItem = (props: CourseItemProps) => {
@@ -30,11 +32,21 @@ export const CourseItem = (props: CourseItemProps) => {
     }
   }
 
+  const handleClickSave = () => {
+    const course: Course = {
+      ...props.data,
+      name
+    };
+    props.onClickSave(course);
+  }
+
   return (
     <ItemContainer
       editing={editing}
-      onClickEdit={hadleClickEdit}
       isEditable={props.isEditable}
+      onClickEdit={hadleClickEdit}
+      onClickSave={handleClickSave}
+      onClickDelete={props.onClickDelete}
     >
       <TextArea
         name="name"
