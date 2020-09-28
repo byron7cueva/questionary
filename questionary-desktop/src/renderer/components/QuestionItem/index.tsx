@@ -5,23 +5,31 @@ import { ItemContainer } from '../ItemContainer';
 import { Question } from '../../types/Question';
 
 export interface QuestionItemProps {
-  data: Question,
-  isEditable?: boolean,
+  data: Question;
+  isEditable?: boolean;
+  editing?: boolean;
   onClickDelete?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onClickSave?: (question: Question) => void;
+  onClickCancelEdit?: () => void;
 }
 
 export const QuestionItem = (props: QuestionItemProps): JSX.Element => {
-  const [editing, setEditing] = useState(false);
+  const isEditing = props.isEditable && props.editing;
+  const [editing, setEditing] = useState(isEditing);
   const [questionEdit, setQuestionEdit] = useState(props.data.question);
   const [answereEdit, setAnswereEdit] = useState(props.data.answere);
 
-  const handleClickEditable = () => {
-    if (editing) {
-      setQuestionEdit(props.data.question);
-      setAnswereEdit(props.data.answere);
+  const handleClickEdit = () => {
+    setEditing(true);
+  }
+
+  const handleClickCancelEdit = () => {
+    setQuestionEdit(props.data.question);
+    setAnswereEdit(props.data.answere);
+    setEditing(false);
+    if (props.onClickCancelEdit) {
+      props.onClickCancelEdit();
     }
-    setEditing(!editing);
   }
 
   const handleChangeEdit = (event: any) => {
@@ -39,15 +47,17 @@ export const QuestionItem = (props: QuestionItemProps): JSX.Element => {
       answere: answereEdit
     };
     props.onClickSave(question);
+    setEditing(false);
   }
 
   return (
     <ItemContainer
       editing={editing}
-      onClickEdit={handleClickEditable}
+      onClickEdit={handleClickEdit}
       isEditable={props.isEditable}
       onClickDelete={props.onClickDelete}
       onClickSave={handleClickSave}
+      onClickCancelEdit={handleClickCancelEdit}
     >
       <TextArea
           name="question"

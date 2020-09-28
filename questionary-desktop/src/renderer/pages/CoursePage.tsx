@@ -8,6 +8,7 @@ import { QuestionItem } from '../components/QuestionItem';
 import { Options, Container } from '../components/Layout';
 import { Course } from '../types/Course';
 import { Question } from '../types/Question';
+import { HttpService } from '../lib/http';
 
 export interface CoursePageParams {
   idCourse: string;
@@ -16,32 +17,85 @@ export interface CoursePageParams {
 export const CoursePage = (): JSX.Element => {
   useMenuNavigate();
   const { idCourse } = useParams<CoursePageParams>();
-  const [course, setCourse] = useState(null);
-
-  const data: Course = {
-    idCourse: 1,
-    name: 'Electron',
-    questions: [
-      { idQuestion: 1, question: 'Pregunta de prueba 1', answere: 'Respuesta de prueba 1' },
-      { idQuestion: 2, question: 'Pregunta de prueba 1', answere: 'Respuesta de prueba 2' },
-      { idQuestion: 3, question: 'Pregunta de prueba 1', answere: 'Respuesta de prueba 3' },
-      { idQuestion: 4, question: 'Pregunta de prueba 1', answere: 'Respuesta de prueba 4' },
-    ]
-  };
+  const [course, setCourse] = useState<Course>(null);
+  const [newQuestion, setNewQuestion] = useState<Question>(null);
 
   useEffect(() => {
-    console.log(idCourse);
-    if (idCourse) {
-      setCourse(data);
-    }
+    getCourse();
   }, []);
+
+  const getCourse = async () => {
+    try {
+      const data = await HttpService.getInstance().get(`/courses/${idCourse}`);
+      setCourse(data);
+    } catch (error) {
+      // TODO Manejar bien el error
+      console.error(error);
+    }
+  }
+
+  const saveQuestion = async (question: Question) => {
+    try {
+      if (newQuestion) {
+        // TODO Remover la asignacion del idQuestion se la pone por el mock API
+        question.idQuestion = Math.floor(Math.random() * 100) + 1;
+        await HttpService.getInstance().post('/questions', question);
+        setNewQuestion(null);
+      } else {
+        // TODO Cambiar el id por idQuestion
+        await HttpService.getInstance().put('/questions', question.id, question);
+      }
+      getCourse();
+    } catch (error) {
+      // TODO Manejar bien el error
+      console.error(error);
+    }
+  }
+
+  const handleClickAddQuestion = () => {
+    const question: Question = {
+      idQuestion: null,
+      idCourse: Number(idCourse),
+      question: '',
+      answere: ''
+    };
+    setNewQuestion(question);
+  }
 
   const handleClickDeleteItem = (question: Question) => {
     console.log('Delete question', question);
   }
 
   const handleClickSaveItem = (question: Question) => {
-    console.log('Save question', question);
+    saveQuestion(question);
+  }
+
+  const handleClickCancelEdit = () => {
+    setNewQuestion(null);
+  }
+
+  const renderQuestionItems = (): JSX.Element => {
+    if (course.questions && course.questions.length > 0) {
+      return (
+        <>
+          {
+            course.questions.map((item: Question) => (
+              <QuestionItem
+                key={item.idQuestion}
+                data={item}
+                isEditable={true}
+                onClickDelete={() => handleClickDeleteItem(item)}
+                onClickSave={handleClickSaveItem}
+              />
+            ))
+          }
+        </>
+      )
+    } else {
+      return (
+        <p> Este curso no tiene preguntas registradas</p>
+      )
+    }
   }
 
   return (
@@ -54,20 +108,26 @@ export const CoursePage = (): JSX.Element => {
               subTitle="Cuestionario"
             />
             <Options>
-                <button className='btn btn-green'>Agregar pregunta</button>
+                <button
+                  className='btn btn-green'
+                  onClick={handleClickAddQuestion}
+                >
+                  Agregar pregunta
+                </button>
             </Options>
             <Container>
               {
-                course.questions.map((item: Question) => (
+                newQuestion && (
                   <QuestionItem
-                    key={item.idQuestion}
-                    data={{...item}}
+                    data={newQuestion}
                     isEditable={true}
-                    onClickDelete={() => handleClickDeleteItem(item)}
+                    editing={true}
                     onClickSave={handleClickSaveItem}
+                    onClickCancelEdit={handleClickCancelEdit}
                   />
-                ))
+                )
               }
+              { renderQuestionItems() }
             </Container>
           </>
         ) : (

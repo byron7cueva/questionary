@@ -56,8 +56,9 @@ export const CoursesList = () => {
     }
   }
 
-  const handleClickQuestionary = (idCourse: number) => {
-    history.push(`/courses/${idCourse}`);
+  const handleClickQuestionary = (course: Course) => {
+    // TODO Camabiar por idCourse, id es temporal para el mock API
+    history.push(`/courses/${course.id}`);
   }
 
   const handleClickSaveItem = (course: Course) => {
@@ -103,7 +104,7 @@ export const CoursesList = () => {
               key={item.idCourse}
               data={item}
               isEditable={true}
-              onClickQuestionary={() => handleClickQuestionary(item.idCourse)}
+              onClickQuestionary={() => handleClickQuestionary(item)}
               onClickSave={handleClickSaveItem}
               onClickDelete={() => handleClickDeteleItem(item)}
             />
