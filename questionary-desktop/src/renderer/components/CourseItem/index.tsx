@@ -38,7 +38,12 @@ export const CourseItem = (props: any) => {
         fontSize={17}
       />
       <CourseOptions>
-        <button className="btn btn-green">Cuestionario</button>
+        <button
+          className="btn btn-green"
+          onClick={props.onClickQuestionary}
+        >
+          Cuestionario
+        </button>
       </CourseOptions>
     </ItemContainer>
   );

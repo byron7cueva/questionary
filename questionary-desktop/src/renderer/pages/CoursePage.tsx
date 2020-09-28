@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
 import { Header } from '../components/Header';
@@ -6,9 +7,17 @@ import { useMenuNavigate } from '../hooks/useMenuNavigate';
 import { QuestionItem } from '../components/QuestionItem';
 import { Options, Container } from '../components/Layout';
 import { Course } from '../types/Course';
+import { Question } from '../types/Question';
+
+export interface CoursePageParams {
+  idCourse: string;
+}
 
 export const CoursePage = (): JSX.Element => {
   useMenuNavigate();
+  const { idCourse } = useParams<CoursePageParams>();
+  const [course, setCourse] = useState(null);
+
   const data: Course = {
     idCourse: 1,
     name: 'Electron',
@@ -19,27 +28,42 @@ export const CoursePage = (): JSX.Element => {
       { idQuestion: 4, question: 'Pregunta de prueba 1', answere: 'Respuesta de prueba 4' },
     ]
   };
-  const [course, setCourse] = useState(data);
+
+  useEffect(() => {
+    console.log(idCourse);
+    if (idCourse) {
+      setCourse(data);
+    }
+  }, []);
 
   return (
     <Layout>
-      <Header
-        title={course.name}
-        subTitle="Cuestionario"
-      />
-      <Options>
-          <button className='btn btn-green'>Agregar pregunta</button>
-      </Options>
-      <Container>
-        {
-          course.questions.map(item => {
-            <QuestionItem
-              data={{...item}}
-              isEditable={true}
+      {
+        course ? (
+          <>
+            <Header
+              title={course.name}
+              subTitle="Cuestionario"
             />
-          })
-        }
-      </Container>
+            <Options>
+                <button className='btn btn-green'>Agregar pregunta</button>
+            </Options>
+            <Container>
+              {
+                course.questions.map((item: Question) => (
+                  <QuestionItem
+                    key={item.idQuestion}
+                    data={{...item}}
+                    isEditable={true}
+                  />
+                ))
+              }
+            </Container>
+          </>
+        ) : (
+          <h1>No existe el curso seleccionado</h1>
+        )
+      }
     </Layout>
   );
 }
