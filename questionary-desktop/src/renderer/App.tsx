@@ -3,7 +3,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 
 import { GlobalStyle } from './styles/global';
-import { Course } from './pages/Course';
+import { CoursePage } from './pages/CoursePage';
 import { Courses } from './pages/Courses';
 import { Search } from './pages/Search';
 
@@ -12,7 +12,7 @@ const App = (): JSX.Element => (
     <GlobalStyle />
     <Route exact path="/" component={Search} />
     <Route exact path="/courses" component={Courses} />
-    <Route exact path="/courses/:idCourse" component={Course}/>
+    <Route exact path="/courses/:idCourse" component={CoursePage}/>
   </MemoryRouter>
 );
 
