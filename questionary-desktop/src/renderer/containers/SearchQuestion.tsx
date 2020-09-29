@@ -1,8 +1,13 @@
+import debug from 'debug';
 import React, { useState } from 'react';
+import { ipcRenderer } from 'electron';
 
 import { Question } from '../types/Question';
 import { Options, Container } from '../components/Layout';
 import { QuestionItem } from '../components/QuestionItem';
+import { HttpService } from '../lib/http';
+
+const log = debug('questionary:web:search');
 
 export const SearchQuestion = () => {
   const [query, setQuery] = useState('');
@@ -18,14 +23,14 @@ export const SearchQuestion = () => {
     }
   }
 
-  const searchQuestions = () => {
-    const datos: Question[] = [
-      { idQuestion: 1, question: 'Prueba de pregunta 1', answere: 'Prueba de respuesta 1' },
-      { idQuestion: 2, question: 'Prueba de pregunta 2', answere: 'Prueba de respuesta 2' },
-      { idQuestion: 3, question: 'Prueba de pregunta 3', answere: 'Prueba de respuesta 3' },
-      { idQuestion: 4, question: 'Prueba de pregunta 4', answere: 'Prueba de respuesta 4' }
-    ];
-    setResults(datos);
+  const searchQuestions = async () => {
+    try {
+      const datos = await HttpService.getInstance().get(`/questions?question=${query}`);
+      setResults(datos);
+    } catch (error) {
+      log(error);
+      ipcRenderer.send('show-error-dialog', 'Questionary', 'No se pudo realizar la consulta, revise su conexión');
+    }
   }
 
   return (
