@@ -1,3 +1,4 @@
+import debug from 'debug';
 import React, { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
@@ -9,6 +10,8 @@ import { Options, Container } from '../components/Layout';
 import { Course } from '../types/Course';
 import { Question } from '../types/Question';
 import { HttpService } from '../lib/http';
+
+const log = debug('questionary:web:course');
 
 interface ICoursePageParams {
   idCourse: string;
@@ -85,8 +88,8 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
       const course = await HttpService.getInstance().get(`/courses/${this.props.match.params.idCourse}`);
       this.setState({course});
     } catch (error) {
-      // TODO Manejar bien el error
-      console.error(error);
+      log(error);
+      ipcRenderer.send('show-error-dialog', 'Questionary', 'No se pudo obtener la información del curso, revise su conexión');
     }
   }
 
@@ -103,8 +106,8 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
       }
       this.getCourse();
     } catch (error) {
-      // TODO Manejar bien el error
-      console.error(error);
+      log(error);
+      ipcRenderer.send('show-error-dialog', 'Questionary', 'No se pudo guardar la pregunta, revise su conexión');
     }
   }
 
@@ -117,8 +120,8 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
         this.clearToDelete();
       }
     } catch (error) {
-      // TODO Manejar bien el error
-      console.error(error);
+      log(error);
+      ipcRenderer.send('show-error-dialog', 'Questionary', 'No se pudo eliminar la pregunta, revise su conexión');
     }
   }
 

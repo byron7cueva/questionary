@@ -1,3 +1,4 @@
+import debug from 'debug';
 import React, { Component } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
@@ -6,6 +7,8 @@ import { CourseItem } from '../components/CourseItem';
 import { Options, Container } from '../components/Layout';
 import { Course } from '../types/Course';
 import { HttpService } from '../lib/http';
+
+const log = debug('questionary:web:courses');
 
 interface ICousesListState {
   courses: Course[];
@@ -73,8 +76,13 @@ class Courses extends Component<RouteComponentProps, ICousesListState> {
   }
 
   async getCourses() {
-    const courses = await HttpService.getInstance().get('/courses');
-    this.setState({courses});
+    try {
+      const courses = await HttpService.getInstance().get('/courses');
+      this.setState({courses});
+    } catch (error) {
+      log(error);
+      ipcRenderer.send('show-error-dialog', 'Questionary', 'No se pudo obtener la información de los cursos, revise su conexión');
+    }
   }
 
   async saveCourse(course: Course) {
@@ -89,8 +97,8 @@ class Courses extends Component<RouteComponentProps, ICousesListState> {
       }
       this.getCourses();
     } catch (error) {
-      // TODO Gestionar el error
-      console.error(error);
+      log(error);
+      ipcRenderer.send('show-error-dialog', 'Questionary', 'No se pudo guardar el curso, revise su conexión');
     }
   }
 
@@ -103,8 +111,8 @@ class Courses extends Component<RouteComponentProps, ICousesListState> {
         this.getCourses();
       }
     } catch (error) {
-      // TODO Gestionar el manejo de errores
-      console.error(error);
+      log(error);
+      ipcRenderer.send('show-error-dialog', 'Questionary', 'No se pudo eleminar el curso, revise su conexión');
     }
   }
 
