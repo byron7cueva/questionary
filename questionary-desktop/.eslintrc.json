@@ -14,5 +14,17 @@
       "plugin:react/recommended"
     ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["react"]
+    "plugins": ["react"],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx"
+          ]
+        }
+      }
+    }
 }
