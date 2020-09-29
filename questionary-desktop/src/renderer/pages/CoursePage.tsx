@@ -1,80 +1,99 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { Component } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 
 import { Layout } from '../components/Layout';
 import { Header } from '../components/Header';
-import { useMenuNavigate } from '../hooks/useMenuNavigate';
 import { QuestionItem } from '../components/QuestionItem';
 import { Options, Container } from '../components/Layout';
 import { Course } from '../types/Course';
 import { Question } from '../types/Question';
 import { HttpService } from '../lib/http';
 
-export interface CoursePageParams {
+interface ICoursePageParams {
   idCourse: string;
 }
 
-export const CoursePage = (): JSX.Element => {
-  useMenuNavigate();
-  const { idCourse } = useParams<CoursePageParams>();
-  const [course, setCourse] = useState<Course>(null);
-  const [newQuestion, setNewQuestion] = useState<Question>(null);
+interface ICursePageState {
+  course: Course;
+  newQuestion: Question;
+}
 
-  useEffect(() => {
-    getCourse();
-  }, []);
+class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, ICursePageState> {
 
-  const getCourse = async () => {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      course: null,
+      newQuestion: null
+    };
+  }
+
+  handleClickAddQuestion = () => {
+    const newQuestion: Question = {
+      idQuestion: null,
+      idCourse: Number(this.props.match.params.idCourse),
+      question: '',
+      answere: ''
+    };
+    this.setState({newQuestion});
+  }
+
+  handleClickDeleteItem = (question: Question) => {
+    console.log('Delete question', question);
+  }
+
+  handleClickSaveItem = (question: Question) => {
+    this.saveQuestion(question);
+  }
+
+  handleClickCancelEdit = () => {
+    this.setState({newQuestion: null});
+  }
+
+  handleNavigate = (event: IpcRendererEvent, to: string) => {
+    this.props.history.push(to);
+  }
+
+  componentDidMount() {
+    this.getCourse();
+    ipcRenderer.on('navigate', this.handleNavigate);
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.off('navigate', this.handleNavigate);
+  }
+
+  async getCourse() {
     try {
-      const data = await HttpService.getInstance().get(`/courses/${idCourse}`);
-      setCourse(data);
+      const course = await HttpService.getInstance().get(`/courses/${this.props.match.params.idCourse}`);
+      this.setState({course});
     } catch (error) {
       // TODO Manejar bien el error
       console.error(error);
     }
   }
 
-  const saveQuestion = async (question: Question) => {
+  async saveQuestion(question: Question) {
     try {
-      if (newQuestion) {
+      if (this.state.newQuestion) {
         // TODO Remover la asignacion del idQuestion se la pone por el mock API
         question.idQuestion = Math.floor(Math.random() * 100) + 1;
         await HttpService.getInstance().post('/questions', question);
-        setNewQuestion(null);
+        this.setState({newQuestion: null});
       } else {
         // TODO Cambiar el id por idQuestion
         await HttpService.getInstance().put('/questions', question.id, question);
       }
-      getCourse();
+      this.getCourse();
     } catch (error) {
       // TODO Manejar bien el error
       console.error(error);
     }
   }
 
-  const handleClickAddQuestion = () => {
-    const question: Question = {
-      idQuestion: null,
-      idCourse: Number(idCourse),
-      question: '',
-      answere: ''
-    };
-    setNewQuestion(question);
-  }
-
-  const handleClickDeleteItem = (question: Question) => {
-    console.log('Delete question', question);
-  }
-
-  const handleClickSaveItem = (question: Question) => {
-    saveQuestion(question);
-  }
-
-  const handleClickCancelEdit = () => {
-    setNewQuestion(null);
-  }
-
-  const renderQuestionItems = (): JSX.Element => {
+  renderQuestionItems(): JSX.Element {
+    const { course } = this.state;
     if (course.questions && course.questions.length > 0) {
       return (
         <>
@@ -84,8 +103,8 @@ export const CoursePage = (): JSX.Element => {
                 key={item.idQuestion}
                 data={item}
                 isEditable={true}
-                onClickDelete={() => handleClickDeleteItem(item)}
-                onClickSave={handleClickSaveItem}
+                onClickDelete={() => this.handleClickDeleteItem(item)}
+                onClickSave={this.handleClickSaveItem}
               />
             ))
           }
@@ -98,42 +117,51 @@ export const CoursePage = (): JSX.Element => {
     }
   }
 
-  return (
-    <Layout>
-      {
-        course ? (
-          <>
-            <Header
-              title={course.name}
-              subTitle="Cuestionario"
-            />
-            <Options>
-                <button
-                  className='btn btn-green'
-                  onClick={handleClickAddQuestion}
-                >
-                  Agregar pregunta
-                </button>
-            </Options>
-            <Container>
-              {
-                newQuestion && (
-                  <QuestionItem
-                    data={newQuestion}
-                    isEditable={true}
-                    editing={true}
-                    onClickSave={handleClickSaveItem}
-                    onClickCancelEdit={handleClickCancelEdit}
-                  />
-                )
-              }
-              { renderQuestionItems() }
-            </Container>
-          </>
-        ) : (
-          <h1>No existe el curso seleccionado</h1>
-        )
-      }
-    </Layout>
-  );
+  render(): JSX.Element {
+    const { course, newQuestion } = this.state;
+    return (
+      <Layout>
+        {
+          course ? (
+            <>
+              <Header
+                title={course.name}
+                subTitle="Cuestionario"
+              />
+              <Options>
+                  <button
+                    className='btn btn-green'
+                    onClick={this.handleClickAddQuestion}
+                  >
+                    Agregar pregunta
+                  </button>
+              </Options>
+              <Container>
+                {
+                  newQuestion && (
+                    <QuestionItem
+                      data={newQuestion}
+                      isEditable={true}
+                      editing={true}
+                      onClickSave={this.handleClickSaveItem}
+                      onClickCancelEdit={this.handleClickCancelEdit}
+                    />
+                  )
+                }
+                { this.renderQuestionItems() }
+              </Container>
+            </>
+          ) : (
+            <h1>No existe el curso seleccionado</h1>
+          )
+        }
+      </Layout>
+    );
+  }
+}
+
+const CoursePage = withRouter(CourseComponent);
+
+export {
+  CoursePage
 }
