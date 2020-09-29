@@ -5,7 +5,7 @@ import { Actions } from '../Actions';
 
 export interface ItemContainerProps {
   editing: boolean;
-  children: any;
+  children: JSX.Element[];
   isEditable: boolean;
   onClickEdit?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onClickSave?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -13,7 +13,7 @@ export interface ItemContainerProps {
   onClickCancelEdit?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export const ItemContainer = (props: ItemContainerProps) => (
+export const ItemContainer = (props: ItemContainerProps): JSX.Element => (
   <Item className={`${props.editing ? 'isEdit' : ''}`}>
     <Container className="item__container">
       {props.children}

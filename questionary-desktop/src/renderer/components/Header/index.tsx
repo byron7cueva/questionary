@@ -5,10 +5,10 @@ import { HeaderContainer } from './style';
 export interface HeaderProps {
   title: string;
   subTitle: string;
-  children?: any;
+  children?: JSX.Element;
 }
 
-export const Header = (props: HeaderProps) => (
+export const Header = (props: HeaderProps): JSX.Element => (
   <HeaderContainer>
     <header>
       <h3>{props.subTitle}</h3>

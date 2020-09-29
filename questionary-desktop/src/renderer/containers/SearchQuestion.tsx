@@ -9,15 +9,15 @@ import { HttpService } from '../lib/http';
 
 const log = debug('questionary:web:search');
 
-export const SearchQuestion = () => {
+export const SearchQuestion = (): JSX.Element => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Question[]>([]);
 
-  const handleChangeQuery = (event: any) => {
+  const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setQuery(event.target.value);
   }
 
-  const handleKeyUp = (event: any) => {
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       searchQuestions();
     }
@@ -25,7 +25,7 @@ export const SearchQuestion = () => {
 
   const searchQuestions = async () => {
     try {
-      const datos = await HttpService.getInstance().get(`/questions?question=${query}`);
+      const datos: Question[] = await HttpService.getInstance().get(`/questions?question=${query}`);
       setResults(datos);
     } catch (error) {
       log(error);

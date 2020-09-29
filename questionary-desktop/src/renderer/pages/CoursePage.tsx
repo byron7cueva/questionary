@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 
-import { Layout } from '../components/Layout';
 import { Header } from '../components/Header';
 import { QuestionItem } from '../components/QuestionItem';
-import { Options, Container } from '../components/Layout';
+import { Options, Container, Layout } from '../components/Layout';
 import { Course } from '../types/Course';
 import { Question } from '../types/Question';
 import { HttpService } from '../lib/http';
@@ -25,7 +24,7 @@ interface ICursePageState {
 
 class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, ICursePageState> {
 
-  constructor(props: any) {
+  constructor(props: RouteComponentProps<ICoursePageParams>) {
     super(props);
     this.state = {
       course: null,
@@ -85,7 +84,7 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
 
   async getCourse() {
     try {
-      const course = await HttpService.getInstance().get(`/courses/${this.props.match.params.idCourse}`);
+      const course: Course = await HttpService.getInstance().get(`/courses/${this.props.match.params.idCourse}`);
       this.setState({course});
     } catch (error) {
       log(error);

@@ -13,11 +13,11 @@ export interface TextAreaProps {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export const TextArea = (props: TextAreaProps) => {
+export const TextArea = (props: TextAreaProps): JSX.Element => {
   const initialHeight = props.fontSize + INTERLINE;
   const [height, setHeight] = useState(initialHeight);
 
-  const handleInput = (event: any) => {
+  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     let actualHeight: number = event.target.scrollHeight;
     const beforeHeight = height;
     if (event.target.value === '') {

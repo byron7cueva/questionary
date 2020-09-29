@@ -16,7 +16,7 @@ export interface CourseItemProps {
   onClickCancelEdit?: () => void;
 }
 
-export const CourseItem = (props: CourseItemProps) => {
+export const CourseItem = (props: CourseItemProps): JSX.Element => {
   const isEditing = props.isEditable && props.editing;
   const [editing, setEditing] = useState(isEditing);
   const [name, setName] = useState(props.data.name);
@@ -33,7 +33,7 @@ export const CourseItem = (props: CourseItemProps) => {
     }
   }
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const { name, value } = event.target;
     switch (name) {
       case 'name': setName(value); break;

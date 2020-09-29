@@ -18,7 +18,7 @@ interface ICousesListState {
 
 class Courses extends Component<RouteComponentProps, ICousesListState> {
 
-  constructor(props: any) {
+  constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
       courses: [],
@@ -77,7 +77,7 @@ class Courses extends Component<RouteComponentProps, ICousesListState> {
 
   async getCourses() {
     try {
-      const courses = await HttpService.getInstance().get('/courses');
+      const courses: Course[] = await HttpService.getInstance().get('/courses');
       this.setState({courses});
     } catch (error) {
       log(error);

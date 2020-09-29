@@ -5,7 +5,7 @@ import { Header } from '../components/Header';
 import { SearchQuestion } from '../containers/SearchQuestion';
 import { useMenuNavigate } from '../hooks/useMenuNavigate';
 
-export const Search = () => {
+export const Search = (): JSX.Element => {
   useMenuNavigate();
   
   return (

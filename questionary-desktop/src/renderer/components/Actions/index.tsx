@@ -15,7 +15,7 @@ export interface ActionsProps {
   onClickCancelEdit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export const Actions = (props: ActionsProps) => (
+export const Actions = (props: ActionsProps): JSX.Element => (
   <ActionsContainer className={props.className}>
     {
       props.editing ? (

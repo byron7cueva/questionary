@@ -32,7 +32,7 @@ export const QuestionItem = (props: QuestionItemProps): JSX.Element => {
     }
   }
 
-  const handleChangeEdit = (event: any) => {
+  const handleChangeEdit = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const { name, value } = event.target;
     switch (name) {
       case 'question': setQuestionEdit(value); break;
