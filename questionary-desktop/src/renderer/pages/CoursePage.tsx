@@ -17,6 +17,7 @@ interface ICoursePageParams {
 interface ICursePageState {
   course: Course;
   newQuestion: Question;
+  toDelete: Question;
 }
 
 class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, ICursePageState> {
@@ -25,7 +26,8 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
     super(props);
     this.state = {
       course: null,
-      newQuestion: null
+      newQuestion: null,
+      toDelete: null
     };
   }
 
@@ -39,8 +41,18 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
     this.setState({newQuestion});
   }
 
+  handleAccepDeleteDialog = () => {
+    this.deleteQuestion();
+  };
+
+  clearToDelete = () => {
+    this.setState({toDelete: null});
+  };
+
+
   handleClickDeleteItem = (question: Question) => {
-    console.log('Delete question', question);
+    this.setState({toDelete: question});
+    ipcRenderer.send('show-question', 'Eliminar pregunta', `Esta seguro que desea eliminar la pregunta: ${question.question}`);
   }
 
   handleClickSaveItem = (question: Question) => {
@@ -58,10 +70,14 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
   componentDidMount() {
     this.getCourse();
     ipcRenderer.on('navigate', this.handleNavigate);
+    ipcRenderer.on('acept-dialog', this.handleAccepDeleteDialog);
+    ipcRenderer.on('cancel-dialog', this.clearToDelete);
   }
 
   componentWillUnmount() {
     ipcRenderer.off('navigate', this.handleNavigate);
+    ipcRenderer.off('acept-dialog', this.handleAccepDeleteDialog);
+    ipcRenderer.off('cancel-dialog', this.clearToDelete);
   }
 
   async getCourse() {
@@ -86,6 +102,20 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
         await HttpService.getInstance().put('/questions', question.id, question);
       }
       this.getCourse();
+    } catch (error) {
+      // TODO Manejar bien el error
+      console.error(error);
+    }
+  }
+
+  async deleteQuestion() {
+    const { toDelete } = this.state;
+    try {
+      if (toDelete) {
+        // TODO Cambiar el id por idQuestion
+        await HttpService.getInstance().delete('/questions', toDelete.id);
+        this.clearToDelete();
+      }
     } catch (error) {
       // TODO Manejar bien el error
       console.error(error);
