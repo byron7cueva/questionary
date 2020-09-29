@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 
 import { setupMenu } from './main/menu';
+import { setupMessageDialog } from './main/messageDialog';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
@@ -20,6 +21,7 @@ const createWindow = (): void => {
   });
 
   setupMenu(mainWindow);
+  setupMessageDialog(mainWindow);
 
 
   // and load the index.html of the app.
