@@ -1,116 +1,157 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { Component } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { ipcRenderer } from 'electron';
 
 import { CourseItem } from '../components/CourseItem';
 import { Options, Container } from '../components/Layout';
 import { Course } from '../types/Course';
 import { HttpService } from '../lib/http';
 
-export const CoursesList = () => {
-  const history = useHistory();
-  const [courses, setCourses] = useState([]);
-  const [newCourse, setNewCourse] = useState<Course | null>(null);
+interface ICousesListState {
+  courses: Course[];
+  newCourse: Course;
+  toDelete: Course;
+}
 
-  useEffect(() => {
-    getCourses();
-  }, []);
+class Courses extends Component<RouteComponentProps, ICousesListState> {
 
-  const handleAddCourse = () => {
-    const course: Course = {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      courses: [],
+      newCourse: null,
+      toDelete: null
+    };
+  }
+
+  handleAddCourse = () => {
+    const newCourse: Course = {
       idCourse: null,
       name: '',
       questions: []
     };
-    setNewCourse(course);
+    this.setState({newCourse});
+  };
+
+  handleAccepDeleteDialog = () => {
+    this.deleteCourse();
+  };
+
+  clearToDelete = () => {
+    this.setState({toDelete: null});
+  };
+
+  handleClickQuestionary = (course: Course) => {
+    // TODO Camabiar por idCourse, id es temporal para el mock API
+    this.props.history.push(`/courses/${course.id}`);
+  };
+
+  handleClickSaveItem = (course: Course) => {
+    this.saveCourse(course);
+  };
+
+  handleClickDeteleItem = (course: Course) => {
+    this.setState({toDelete: course});
+    ipcRenderer.send('show-question', 'Eliminar curso', `Esta seguro que desea eliminar el curso: ${course.name}`);
+  };
+
+  handleClickCancelEdit = () => {
+    if (this.state.newCourse) {
+      this.setState({newCourse: null});
+    }
   }
 
-  const getCourses = async () => {
-    const data = await HttpService.getInstance().get('/courses');
-    setCourses(data);
+  componentDidMount() {
+    this.getCourses();
+    ipcRenderer.on('acept-dialog', this.handleAccepDeleteDialog);
+    ipcRenderer.on('cancel-dialog', this.clearToDelete);
+  }
+  
+  componentWillUnmount() {
+    ipcRenderer.off('acept-dialog', this.handleAccepDeleteDialog);
+    ipcRenderer.off('cancel-dialog', this.clearToDelete);
   }
 
-  const saveCourse = async (course: Course) => {
+  async getCourses() {
+    const courses = await HttpService.getInstance().get('/courses');
+    this.setState({courses});
+  }
+
+  async saveCourse(course: Course) {
     try {
-      if (newCourse) {
+      if (this.state.newCourse) {
         // TODO Quitar la siguiente linea solo se programo para la mock api
         course.idCourse = Math.floor(Math.random() * 100) + 1;
         await HttpService.getInstance().post('/courses', course);
-        setNewCourse(null);
+        this.setState({newCourse: null});
       } else {
         await HttpService.getInstance().put('/courses', course.idCourse.toString(), course);
       }
-      getCourses();
+      this.getCourses();
     } catch (error) {
       // TODO Gestionar el error
       console.error(error);
     }
   }
 
-  const deleteCourse = async (course: Course) => {
+  async deleteCourse() {
+    const { toDelete } = this.state;
     try {
-      await HttpService.getInstance().delete('/courses', course.id);
-      getCourses();
+      if (toDelete) {
+        await HttpService.getInstance().delete('/courses', toDelete.id);
+        this.clearToDelete();
+        this.getCourses();
+      }
     } catch (error) {
       // TODO Gestionar el manejo de errores
       console.error(error);
     }
   }
 
-  const handleClickQuestionary = (course: Course) => {
-    // TODO Camabiar por idCourse, id es temporal para el mock API
-    history.push(`/courses/${course.id}`);
+  render() {
+    return (
+      <>
+        <Options>
+          <button
+            className='btn btn-green'
+            onClick={this.handleAddCourse}
+          >
+            Agregar curso
+          </button>
+        </Options>
+        <Container>
+          {
+            this.state.newCourse && (
+              <CourseItem
+                data={this.state.newCourse}
+                isEditable={true}
+                editing={true}
+                hideOptionsCourse={true}
+                onClickSave={this.handleClickSaveItem}      
+                onClickCancelEdit={this.handleClickCancelEdit}
+              />
+            )
+          }
+          {
+            this.state.courses.map((item: Course) => (
+              <CourseItem
+                key={item.idCourse}
+                data={item}
+                isEditable={true}
+                onClickQuestionary={() => this.handleClickQuestionary(item)}
+                onClickSave={this.handleClickSaveItem}
+                onClickDelete={() => this.handleClickDeteleItem(item)}
+              />
+            ))
+          }
+        </Container>
+      </>
+    );
   }
+}
 
-  const handleClickSaveItem = (course: Course) => {
-    saveCourse(course);
-  }
+const CoursesList = withRouter(Courses);
 
-  const handleClickDeteleItem = (course: Course) => {
-    deleteCourse(course);
-  }
-
-  const handleClickCancelEdit = () => {
-    if (newCourse) {
-      setNewCourse(null);
-    }
-  }
-
-  return (
-    <>
-      <Options>
-        <button
-          className='btn btn-green'
-          onClick={handleAddCourse}
-        >
-          Agregar curso
-        </button>
-      </Options>
-      <Container>
-        {
-          newCourse && (
-            <CourseItem
-              data={newCourse}
-              isEditable={true}
-              editing={true}
-              hideOptionsCourse={true}
-              onClickSave={handleClickSaveItem}      
-              onClickCancelEdit={handleClickCancelEdit}
-            />
-          )
-        }
-        {
-          courses.map((item: Course) => (
-            <CourseItem
-              key={item.idCourse}
-              data={item}
-              isEditable={true}
-              onClickQuestionary={() => handleClickQuestionary(item)}
-              onClickSave={handleClickSaveItem}
-              onClickDelete={() => handleClickDeteleItem(item)}
-            />
-          ))
-        }
-      </Container>
-    </>
-  );
+export {
+   CoursesList
 }
