@@ -3,6 +3,9 @@ import { Course, CourseCreate } from 'questionary-domain';
 
 import { Connection } from '../database/Connection';
 
+/**
+ * Model to Course
+ */
 class CourseModel extends Model<Course, CourseCreate> implements Course {
   courseId!: number;
   name!: string;
