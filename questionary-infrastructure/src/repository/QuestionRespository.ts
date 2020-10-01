@@ -41,8 +41,17 @@ export class QuestionRepository extends AbstQuestionRepository {
     return updatedQuestion;
   }
 
+  /**
+   * Delete Question
+   * 
+   * @param {number} questionId Id of question
+   * @return {Promise<boolean>} True if delete or False if don't delete
+   */
   async delete(questionId: number): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    const constraint = { where: { questionId } };
+    const result = await QuestionModel.destroy(constraint);
+    console.log(result);
+    return true;
   }
   
 }
