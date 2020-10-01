@@ -53,5 +53,18 @@ export class QuestionRepository extends AbstQuestionRepository {
     console.log(result);
     return true;
   }
+
+  /**
+   * Find question by course id
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<Question[]>} List of questions
+   */
+  findByCourseId(courseId: number): Promise<Question[]> {
+    const constraint = {
+      where: { courseId }
+    };
+    return QuestionModel.findAll(constraint);  
+  }
   
 }
