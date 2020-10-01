@@ -17,30 +17,31 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * Create the new course
    * 
    * @param {CourseCreate} course Interface to create course
-   * @return {Course} Course saved
+   * @return {Promise<Course>} Course saved
    */
-  abstract create(course: CourseCreate): Course;
+  abstract create(course: CourseCreate): Promise<Course>;
 
   /**
    * Update course
    * 
    * @param {Course} course Course to update
-   * @return {Course} Course updated
+   * @return {Promise<Course>} Course updated
    */
-  abstract update(course: Course): Course;
+  abstract update(course: Course): Promise<Course>;
 
   /**
    * Delete course
    * 
    * @param {number} courseId Id of course
-   * @return {boolean} True if course deleted or false if don't deleted
+   * @return {Promise<boolean>} True if course deleted or false if don't deleted
    */
-  abstract delete(courseId: number): boolean;
+  abstract delete(courseId: number): Promise<boolean>;
 
   /**
    * Get one course by courseId
    * 
    * @param {number} courseId Id of course
+   * @return {Promise<Course>} Course
    */
-  abstract getById(courseId: number): Course;
+  abstract getById(courseId: number): Promise<Course>;
 }
