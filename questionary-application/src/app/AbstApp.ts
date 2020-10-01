@@ -53,14 +53,14 @@ export abstract class AbstApp {
    * 
    * @return {CourseGateway} Intance of CourseGateway
    */
-  getCourseGateway(): CourseGateway {
+  get courseGateway(): CourseGateway {
     return this.container.resolve(CourseGateway);
   }
 
   /**
    * Return QuestionGateway instance
    */
-  getQuestionGateway(): QuestionGateway {
+  get questionGateway(): QuestionGateway {
     return this.container.resolve(QuestionGateway);
   }
 }
