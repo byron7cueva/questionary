@@ -46,9 +46,21 @@ export class CourseGateway extends AbstCourseGateway {
     return this.useCase.save(newCourse);
   }
 
+  /**
+   * Update a course
+   * 
+   * @param {number} courseId Id of course
+   * @param {any} course Object with info of course
+   * @return {Promise<Course>} Course updated
+   */
   update(courseId: number, course: any): Promise<Course> {
-    throw new Error('Method not implemented.');
+    const updateCourse: Course = {
+      ...course,
+      courseId
+    };
+    return this.useCase.update(updateCourse);
   }
+
   delete(courseId: number): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
