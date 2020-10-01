@@ -1,5 +1,5 @@
 import { Course, AbstCourseRepository, CourseCreate } from 'questionary-domain';
-import { CourseModel } from '../model/CourseModel';
+import { CourseModel } from '../model';
 
 /**
  * Implementation of AbstCourseRepository
