@@ -5,6 +5,21 @@
 		},
 		{
 			"path": "questionary-mock-api"
+		},
+		{
+			"path": "questionary-common"
+		},
+		{
+			"path": "questionary-domain"
+		},
+		{
+			"path": "questionary-application"
+		},
+		{
+			"path": "questionary-infrastructure"
+		},
+		{
+			"path": "questionary-db"
 		}
 	],
 	"settings": {}
