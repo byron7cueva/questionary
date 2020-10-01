@@ -1,3 +1,2 @@
-import { QuestionUseCase } from "./usecase/QuestionUseCase";
-
 export * from './usecase/QuestionUseCase';
+export * from './gateway/QuestionGateway';

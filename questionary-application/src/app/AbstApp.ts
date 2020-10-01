@@ -2,7 +2,7 @@ import { DependencyContainer, container } from "tsyringe";
 import { ContainerToken } from 'questionary-domain';
 
 import { CourseUseCase, CourseGateway } from '../course';
-import { QuestionUseCase } from '../question';
+import { QuestionUseCase, QuestionGateway } from '../question';
 
 /**
  * Abstract App
@@ -49,11 +49,18 @@ export abstract class AbstApp {
   }
 
   /**
-   * Get of container instance
+   * Return CourseGateway instance
    * 
    * @return {CourseGateway} Intance of CourseGateway
    */
   getCourseGateway(): CourseGateway {
     return this.container.resolve(CourseGateway);
+  }
+
+  /**
+   * Return QuestionGateway instance
+   */
+  getQuestionGateway(): QuestionGateway {
+    return this.container.resolve(QuestionGateway);
   }
 }
