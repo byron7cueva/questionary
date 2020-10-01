@@ -25,6 +25,6 @@ export class CourseUseCase extends AbstCourseUseCase {
    * @return {Promise<Course[]>} List of courses
    */
   getAll(): Promise<Course[]> {
-    return this.repository.getAll();
+    return this.repository.findAll();
   }
 }

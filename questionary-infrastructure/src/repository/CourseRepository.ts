@@ -11,7 +11,7 @@ export class CourseRepository implements AbstCourseRepository {
    * 
    * @return {Promise<Course[]>} List of courses
    */
-  getAll(): Promise<Course[]> {
+  findAll(): Promise<Course[]> {
     return CourseModel.findAll();
   }
 

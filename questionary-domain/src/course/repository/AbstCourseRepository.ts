@@ -11,7 +11,7 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * 
    * @return {Promise<Course[]>} List of courses
    */
-  abstract getAll(): Promise<Course[]>;
+  abstract findAll(): Promise<Course[]>;
 
   /**
    * Create the new course
