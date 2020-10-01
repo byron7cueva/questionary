@@ -27,9 +27,9 @@ export class CourseGateway extends AbstCourseGateway {
   /**
    * Get all courses
    * 
-   * @return {Promise<Course[]>} List of courses
+   * @return {Promise<any[]>} List of courses
    */
-  getAll(): Promise<Course[]> {
+  getAll(): Promise<any[]> {
     return this.useCase.getAll();
   }
 
@@ -37,9 +37,9 @@ export class CourseGateway extends AbstCourseGateway {
    * Save a course
    * 
    * @param {any} course Object with info of course
-   * @return {Promise<Course>} Course saved
+   * @return {Promise<any>} Course saved
    */
-  save(course: any): Promise<Course> {
+  save(course: any): Promise<any> {
     const newCourse: CourseCreate = {
       ...course
     };
@@ -49,14 +49,14 @@ export class CourseGateway extends AbstCourseGateway {
   /**
    * Update a course
    * 
-   * @param {number} courseId Id of course
+   * @param {string} courseId Id of course
    * @param {any} course Object with info of course
-   * @return {Promise<Course>} Course updated
+   * @return {Promise<any>} Course updated
    */
-  update(courseId: number, course: any): Promise<Course> {
+  update(courseId: string, course: any): Promise<any> {
     const updateCourse: Course = {
       ...course,
-      courseId
+      courseId: courseId as unknown as number
     };
     return this.useCase.update(updateCourse);
   }
@@ -64,20 +64,20 @@ export class CourseGateway extends AbstCourseGateway {
   /**
    * Delete a course
    * 
-   * @param {number} courseId Id of course
+   * @param {string} courseId Id of course
    * @return {Promise<boolean>} True if delete or False if not delete
    */
-  delete(courseId: number): Promise<boolean> {
-    return this.useCase.delete(courseId);
+  delete(courseId: string): Promise<boolean> {
+    return this.useCase.delete(courseId as unknown as number);
   }
 
   /**
    * Return a course with your questions
    * 
-   * @param {number} courseId Id of course
-   * @return {Promise<Course>} Course
+   * @param {string} courseId Id of course
+   * @return {Promise<any>} Course
    */
-  getCourseWithQuestions(courseId: number): Promise<Course> {
-    return this.useCase.getCourseAndQuestionsById(courseId);
+  getCourseWithQuestions(courseId: string): Promise<any> {
+    return this.useCase.getCourseAndQuestionsById(courseId as unknown as number);
   }
 }
