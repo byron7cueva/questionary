@@ -71,7 +71,18 @@ export class CourseUseCase extends AbstCourseUseCase {
     return this.repository.delete(courseId);
   }
 
-  getCourseAndQuestionsById(courseId: number): Promise<Course> {
-    throw new Error('Method not implemented.');
+  /**
+   * Return course with your questions
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<Course>} Course
+   */
+  async getCourseAndQuestionsById(courseId: number): Promise<Course> {
+    const course = await this.repository.findById(courseId);
+    if (course) {
+      const questions = await this._questionUseCase.getQuestionsByCourseId(courseId);
+      course.questions = questions;
+    }
+    return course;
   }
 }

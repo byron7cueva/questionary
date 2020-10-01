@@ -39,5 +39,11 @@ export abstract class AbstCourseUseCase extends AbstUseCase<AbstCourseRepository
    */
   abstract delete(courseId: number): Promise<boolean>;
 
+  /**
+   * Return course with your questions
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<Course>} Course
+   */
   abstract getCourseAndQuestionsById(courseId: number): Promise<Course>;
 }
