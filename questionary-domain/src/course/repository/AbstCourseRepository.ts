@@ -43,5 +43,5 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * @param {number} courseId Id of course
    * @return {Promise<Course>} Course
    */
-  abstract getById(courseId: number): Promise<Course>;
+  abstract async findById(courseId: number): Promise<Course>;
 }

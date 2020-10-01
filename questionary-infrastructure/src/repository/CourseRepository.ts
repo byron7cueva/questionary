@@ -63,7 +63,20 @@ export class CourseRepository implements AbstCourseRepository {
     return true;
   }
 
-  getById(courseId: number): Promise<Course> {
-    throw new Error('Method not implemented.');
+  /**
+   * Return a course
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<Course>} Course finded
+   */
+  async findById(courseId: number): Promise<Course> {
+    const constraint = {
+      where: { courseId }
+    };
+    const result = await CourseModel.findOne(constraint);
+    const findedCourse: Course | any = {
+      ...result
+    };
+    return findedCourse;
   }
 }
