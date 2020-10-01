@@ -20,8 +20,25 @@ export class QuestionRepository extends AbstQuestionRepository {
     return savedQuestion;
   }
 
+  /**
+   * Update Question
+   * 
+   * @param {Question} question Question to update
+   * @return {Promise<Question>} Question updated
+   */
   async update(question: Question): Promise<Question> {
-    throw new Error('Method not implemented.');
+    const constraint = {
+      where: {
+        questionId: question.questionId
+      }
+    };
+
+    await QuestionModel.update(question, constraint);
+    const result = await QuestionModel.findOne(constraint);
+    const updatedQuestion: Question | any = {
+      ...result
+    };
+    return updatedQuestion;
   }
 
   async delete(questionId: number): Promise<boolean> {
