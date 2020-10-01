@@ -7,6 +7,7 @@ const coursesRouter = Router();
 /* Config routes */
 coursesRouter.get('/', getAllCourses);
 coursesRouter.post('/', saveCourse);
+coursesRouter.put('/', updateCourse);
 
 /* Implement handler of routers */
 
@@ -38,6 +39,24 @@ async function saveCourse(request: Request, response: Response, next: NextFuncti
     const { body } = request;
     const course = await App.getInstance().courseGateway.save(body);
     response.status(201);
+    response.send(course);
+  } catch(error) {
+    next(error);
+  }
+}
+
+/**
+ * Route for update course
+ * 
+ * @param {Request} request Resquest object
+ * @param {Response} response Response object
+ * @param {NextFunction} next Next function
+ */
+async function updateCourse(request: Request, response: Response, next: NextFunction) {
+  try {
+    const { body, params: { courseId } } = request;
+    const course = await App.getInstance().courseGateway.update(courseId, body);
+    response.status(200);
     response.send(course);
   } catch(error) {
     next(error);
