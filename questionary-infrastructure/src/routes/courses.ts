@@ -9,6 +9,7 @@ coursesRouter.get('/', getAllCourses);
 coursesRouter.post('/', saveCourse);
 coursesRouter.put('/:courseId', updateCourse);
 coursesRouter.delete('/:courseId', deleteCourse);
+coursesRouter.get('/:courseId', getCourse);
 
 /* Implement handler of routers */
 
@@ -77,6 +78,24 @@ async function deleteCourse(request: Request, response: Response, next: NextFunc
     const result = await App.getInstance().courseGateway.delete(courseId);
     response.status(200);
     response.send(result);
+  } catch(error) {
+    next(error);
+  }
+}
+
+/**
+ * Route to get a course
+ * 
+ * @param {Request} request Request object
+ * @param {Response} response Response object
+ * @param {NextFunction} next Next function
+ */
+async function getCourse(request: Request, response: Response, next: NextFunction) {
+  try {
+    const { params: { courseId } } = request;
+    const course = await App.getInstance().courseGateway.getCourseWithQuestions(courseId);
+    response.status(200);
+    response.send(course);
   } catch(error) {
     next(error);
   }
