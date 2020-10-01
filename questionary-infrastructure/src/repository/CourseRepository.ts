@@ -50,8 +50,17 @@ export class CourseRepository implements AbstCourseRepository {
     return updatedCourse;
   }
   
+  /**
+   * Delete course
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<boolean>} True if course deleted or false if don't deleted
+   */
   async delete(courseId: number): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    const constraint = { where: { courseId } };
+    const result = await CourseModel.destroy(constraint);
+    console.log(result);
+    return true;
   }
 
   getById(courseId: number): Promise<Course> {
