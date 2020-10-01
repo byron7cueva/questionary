@@ -12,7 +12,7 @@ export abstract class AbstQuestionRepository extends AbstRepository {
    * @param {QuestionCreate} question Question to create
    * @return {Promise<Question>} Question created
    */
-  abstract create(question: QuestionCreate): Promise<Question>;
+  abstract async create(question: QuestionCreate): Promise<Question>;
 
   /**
    * Update question
@@ -20,7 +20,7 @@ export abstract class AbstQuestionRepository extends AbstRepository {
    * @param {Promise<Question>} question Question to update
    * @return {Promise<Question>} Question updated
    */
-  abstract update(question: Question): Promise<Question>;
+  abstract async update(question: Question): Promise<Question>;
 
   /**
    * Delete question
@@ -28,5 +28,5 @@ export abstract class AbstQuestionRepository extends AbstRepository {
    * @param {number} questionId Id of Question
    * @return {Promise<boolean>} True if delete question o false if don't delete
    */
-  abstract declare(questionId: number): Promise<boolean>;
+  abstract async delete(questionId: number): Promise<boolean>;
 }

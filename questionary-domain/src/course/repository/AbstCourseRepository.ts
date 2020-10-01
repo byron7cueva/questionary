@@ -19,7 +19,7 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * @param {CourseCreate} course Interface to create course
    * @return {Promise<Course>} Course saved
    */
-  abstract create(course: CourseCreate): Promise<Course>;
+  abstract async create(course: CourseCreate): Promise<Course>;
 
   /**
    * Update course
@@ -27,7 +27,7 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * @param {Course} course Course to update
    * @return {Promise<Course>} Course updated
    */
-  abstract update(course: Course): Promise<Course>;
+  abstract async update(course: Course): Promise<Course>;
 
   /**
    * Delete course
@@ -35,7 +35,7 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * @param {number} courseId Id of course
    * @return {Promise<boolean>} True if course deleted or false if don't deleted
    */
-  abstract delete(courseId: number): Promise<boolean>;
+  abstract async delete(courseId: number): Promise<boolean>;
 
   /**
    * Get one course by courseId
