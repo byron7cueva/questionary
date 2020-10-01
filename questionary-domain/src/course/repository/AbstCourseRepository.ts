@@ -17,9 +17,9 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * Create the new course
    * 
    * @param {CourseCreate} course Interface to create course
-   * @return {Promise<Course>} Course saved
+   * @return {Promise<Course | any>} Course created
    */
-  abstract async create(course: CourseCreate): Promise<Course>;
+  abstract async create(course: CourseCreate): Promise<Course | any>;
 
   /**
    * Update course
