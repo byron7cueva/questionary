@@ -1,0 +1,23 @@
+{
+  "name": "questionary-domain",
+  "version": "1.0.0",
+  "description": "This is domain project for questionary",
+  "author": "byron7cueva <byron7cuev@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "typings": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "questionary-common": "link:../questionary-common",
+    "typescript": "^4.0.3"
+  }
+}
