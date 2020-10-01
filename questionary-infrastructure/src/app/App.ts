@@ -1,6 +1,8 @@
-import { AbstApp, ContainerToken } from 'questionary-application';
+import { ContainerToken } from 'questionary-domain';
+import { AbstApp } from 'questionary-application';
 
 import { CourseRepository } from '../repository/CourseRepository';
+import { QuestionRepository } from '../repository/QuestionRespository';
 
 /**
  * Singleton App factory implementation
@@ -42,6 +44,10 @@ export class App extends AbstApp {
   protected registerRepositories(): void {
     this.container.register(ContainerToken.getInstance().AbstCourseRepository, {
       useClass: CourseRepository
+    });
+
+    this.container.register(ContainerToken.getInstance().AbstQuestionRepository, {
+      useClass: QuestionRepository
     });
   }
 }

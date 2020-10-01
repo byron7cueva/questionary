@@ -1,7 +1,10 @@
 import { injectable, inject } from 'tsyringe';
-import { AbstCourseGateway, AbstCourseUseCase, Course } from 'questionary-domain';
-
-import { ContainerToken } from '../../app/ContainerToken';
+import {
+  ContainerToken,
+  AbstCourseGateway,
+  AbstCourseUseCase,
+  Course
+} from 'questionary-domain';
 
 /**
  * Class CourseGateway implementation fof AbstCourseGateway

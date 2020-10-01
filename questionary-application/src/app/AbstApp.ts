@@ -1,6 +1,6 @@
 import { DependencyContainer, container, InjectionToken } from "tsyringe";
 
-import { ContainerToken } from './ContainerToken';
+import { ContainerToken } from 'questionary-domain';
 import { CourseUseCase, CourseGateway } from '../course';
 
 /**

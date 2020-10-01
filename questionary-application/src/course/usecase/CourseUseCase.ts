@@ -1,6 +1,10 @@
 import {injectable, inject} from 'tsyringe';
-import { AbstCourseUseCase, AbstCourseRepository, Course } from 'questionary-domain';
-import { ContainerToken } from '../../app/ContainerToken';
+import {
+  ContainerToken,
+  AbstCourseUseCase,
+  AbstCourseRepository,
+  Course
+} from 'questionary-domain';
 
 /**
  * Class CourseUseCase

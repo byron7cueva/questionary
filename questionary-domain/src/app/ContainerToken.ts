@@ -39,6 +39,7 @@ export class ContainerToken {
    * @return {string} Token
    */
   get AbstCourseRepository(): string { return 'AbstCourseRepository' };
+  get AbstQuestionRepository(): string { return 'AbstQuestionRepository' };
 
   /* UseCase */
 
