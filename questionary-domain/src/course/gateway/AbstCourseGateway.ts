@@ -31,6 +31,12 @@ export abstract class AbstCourseGateway extends AbstGateway<AbstCourseUseCase> {
    */
   abstract async update(courseId: number, course: any): Promise<Course>;
 
+  /**
+   * Delete a course
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<boolean>} True if delete or False if not delete
+   */
   abstract delete(courseId: number): Promise<boolean>;
 
   abstract getCourseWithQuestions(courseId: number): Promise<Course>;
