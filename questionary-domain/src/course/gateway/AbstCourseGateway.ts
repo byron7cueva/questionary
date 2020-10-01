@@ -39,5 +39,11 @@ export abstract class AbstCourseGateway extends AbstGateway<AbstCourseUseCase> {
    */
   abstract delete(courseId: number): Promise<boolean>;
 
+  /**
+   * Return a course with your questions
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<Course>} Course
+   */
   abstract getCourseWithQuestions(courseId: number): Promise<Course>;
 }

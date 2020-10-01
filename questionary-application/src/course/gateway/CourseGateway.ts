@@ -68,10 +68,16 @@ export class CourseGateway extends AbstCourseGateway {
    * @return {Promise<boolean>} True if delete or False if not delete
    */
   delete(courseId: number): Promise<boolean> {
-    return this.delete(courseId);
+    return this.useCase.delete(courseId);
   }
 
+  /**
+   * Return a course with your questions
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<Course>} Course
+   */
   getCourseWithQuestions(courseId: number): Promise<Course> {
-    throw new Error('Method not implemented.');
+    return this.useCase.getCourseAndQuestionsById(courseId);
   }
 }
