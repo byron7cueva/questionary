@@ -61,4 +61,14 @@ export class QuestionUseCase extends AbstQuestionUseCase {
   getQuestionsByCourseId(courseId: number): Promise<Question[]> {
     return this.repository.findByCourseId(courseId);
   }
+
+  /**
+   * Delete all question of course
+   * 
+   * @param {number} courseId Course id
+   * @return {Promise<boolean>} True if delete if not delete False
+   */
+  deleteAllByCourseId(courseId: number): Promise<boolean> {
+    return this.repository.deleteAllByCourseId(courseId);
+  }
 }

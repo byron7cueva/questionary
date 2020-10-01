@@ -39,4 +39,12 @@ export abstract class AbstQuestionUseCase extends AbstUseCase<AbstQuestionReposi
    * @return {Promise<Question[]>} List of questions
    */
   abstract getQuestionsByCourseId(courseId: number): Promise<Question[]>;
+
+  /**
+   * Delete all question of coursessss
+   * 
+   * @param {number} courseId Course id
+   * @return {Promise<boolean>} True if delete if not delete False
+   */
+  abstract deleteAllByCourseId(courseId: number): Promise<boolean>;
 }
