@@ -39,7 +39,7 @@ export class App extends AbstApp {
   /**
    * Register the repository artefacts
    */
-  registerRepositories(): void {
+  protected registerRepositories(): void {
     this.container.register(ContainerToken.getInstance().AbstCourseRepository, {
       useClass: CourseRepository
     });

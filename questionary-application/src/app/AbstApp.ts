@@ -32,7 +32,7 @@ export abstract class AbstApp {
   /**
    * Register Repository instances
    */
-  abstract registerRepositories(): void;
+  protected abstract registerRepositories(): void;
 
   /**
    * Register UseCase instances
