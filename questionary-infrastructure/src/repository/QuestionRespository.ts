@@ -66,5 +66,18 @@ export class QuestionRepository extends AbstQuestionRepository {
     };
     return QuestionModel.findAll(constraint);  
   }
+
+  /**
+   * Delete all questions by course id
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<boolean>} True if delete questions and False if not delete
+   */
+  async deleteAllByCourseId(courseId: number): Promise<boolean> {
+    const constraint = { where: { courseId } };
+    const result = await QuestionModel.destroy(constraint);
+    console.log(result);
+    return true;
+  }
   
 }

@@ -37,4 +37,12 @@ export abstract class AbstQuestionRepository extends AbstRepository {
    * @return {Promise<Question[]>} List of questions
    */
   abstract findByCourseId(courseId: number): Promise<Question[]>;
+
+  /**
+   * Delete all questions by course id
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<boolean>} True if delete questions and False if not delete
+   */
+  abstract async deleteAllByCourseId(courseId: number): Promise<boolean>;
 }
