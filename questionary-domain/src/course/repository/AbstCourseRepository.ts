@@ -25,9 +25,9 @@ export abstract class AbstCourseRepository extends AbstRepository {
    * Update course
    * 
    * @param {Course} course Course to update
-   * @return {Promise<Course>} Course updated
+   * @return {Promise<Course | any>} Course updated
    */
-  abstract async update(course: Course): Promise<Course>;
+  abstract async update(course: Course): Promise<Course | any>;
 
   /**
    * Delete course

@@ -29,8 +29,25 @@ export class CourseRepository implements AbstCourseRepository {
     return savedCourse;
   }
 
-  async update(course: Course): Promise<Course> {
-    throw new Error('Method not implemented.');
+  /**
+   * Update course
+   * 
+   * @param {Course} course Course to update
+   * @return {Promise<Course | any>} Course to updated
+   */
+  async update(course: Course): Promise<Course | any> {
+    const constraint = {
+      where: {
+        courseId: course.courseId
+      }
+    };
+
+    await CourseModel.update(course, constraint);
+    const result = await CourseModel.findOne(constraint);
+    const updatedCourse: Course | any = {
+      ...result
+    };
+    return updatedCourse;
   }
   
   async delete(courseId: number): Promise<boolean> {
