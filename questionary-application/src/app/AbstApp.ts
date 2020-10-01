@@ -1,7 +1,8 @@
-import { DependencyContainer, container, InjectionToken } from "tsyringe";
-
+import { DependencyContainer, container } from "tsyringe";
 import { ContainerToken } from 'questionary-domain';
+
 import { CourseUseCase, CourseGateway } from '../course';
+import { QuestionUseCase } from '../question';
 
 /**
  * Abstract App
@@ -41,6 +42,10 @@ export abstract class AbstApp {
     this.container.register(ContainerToken.getInstance().AbstCourseUseCase, {
       useClass: CourseUseCase
     });
+
+    this.container.register(ContainerToken.getInstance().AbstQuestionUseCase, {
+      useClass: QuestionUseCase
+    })
   }
 
   /**
