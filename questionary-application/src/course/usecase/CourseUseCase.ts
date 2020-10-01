@@ -1,9 +1,12 @@
 import {injectable, inject} from 'tsyringe';
 import {
-  ContainerToken,
-  AbstCourseUseCase,
   AbstCourseRepository,
-  Course, CourseCreate
+  AbstCourseUseCase,
+  AbstQuestionUseCase,
+  Course,
+  CourseCreate,
+  ContainerToken,
+  Question
 } from 'questionary-domain';
 
 /**
@@ -17,7 +20,8 @@ export class CourseUseCase extends AbstCourseUseCase {
    * @param {AbstCourseRepository} repository Repository
    */
   constructor(
-    @inject(ContainerToken.getInstance().AbstCourseRepository) repository: AbstCourseRepository
+    @inject(ContainerToken.getInstance().AbstCourseRepository) repository: AbstCourseRepository,
+    @inject(ContainerToken.getInstance().AbstQuestionUseCase) private _questionUseCase: AbstQuestionUseCase
   ) {
     super(repository);
   }
@@ -51,9 +55,22 @@ export class CourseUseCase extends AbstCourseUseCase {
     return this.repository.update(course);
   }
 
-  delete(courseId: number): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  /**
+   * Delete course id
+   * 
+   * @param {number} courseId Id of course
+   * @return {Promise<boolean>} True if delete course if not delete False
+   */
+  async delete(courseId: number): Promise<boolean> {
+    const questions: Question[] = await this._questionUseCase.getQuestionsByCourseId(courseId);
+
+    if (questions && questions.length > 0) {
+      await this._questionUseCase.deleteAllByCourseId(courseId);
+    }
+
+    return this.repository.delete(courseId);
   }
+
   getCourseAndQuestionsById(courseId: number): Promise<Course> {
     throw new Error('Method not implemented.');
   }
