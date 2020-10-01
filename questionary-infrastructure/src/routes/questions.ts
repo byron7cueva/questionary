@@ -7,6 +7,7 @@ const questionsRouter = Router();
 /* Routes */
 questionsRouter.post('/', saveQuestion);
 questionsRouter.put('/:questionId', updateQuestion);
+questionsRouter.delete('/:questionId', deleteQuestion);
 
 
 /* Implements routes */
@@ -42,6 +43,24 @@ async function updateQuestion(request: Request, response: Response, next: NextFu
     const question = await App.getInstance().questionGateway.update(questionId, body);
     response.status(200);
     response.send(question);
+  } catch(error) {
+    next(error);
+  }
+}
+
+/**
+ * Route to delete a question
+ * 
+ * @param {Request} request Request object
+ * @param {Response} response Response object
+ * @param {NextFunction} next Next function
+ */
+async function deleteQuestion(request: Request, response: Response, next: NextFunction) {
+  try {
+    const { params: { questionId } } = request;
+    const result = await App.getInstance().questionGateway.delete(questionId);
+    response.status(200);
+    response.send(result);
   } catch(error) {
     next(error);
   }
