@@ -1,7 +1,6 @@
 import { AbstGateway } from 'questionary-common';
 
 import { AbstQuestionUseCase } from '../usecase/AbstQuestionUseCase';
-import { Question } from '../entity/Question';
 
 export abstract class AbstQuestionGateway extends AbstGateway<AbstQuestionUseCase> {
 
@@ -9,18 +8,18 @@ export abstract class AbstQuestionGateway extends AbstGateway<AbstQuestionUseCas
    * Save a question
    * 
    * @param {any} question Question to save
-   * @return {Promise<Question>} Question
+   * @return {Promise<any>} Question
    */
-  abstract save(question: any): Promise<Question>;
+  abstract save(question: any): Promise<any>;
 
   /**
    * Update a question
    * 
-   * @param {number} questionId Id of question
-   * @param {Promise<Question>} question Question
-   * @return {Promise<Question>} Question
+   * @param {string} questionId Id of question
+   * @param {any} question Question
+   * @return {Promise<any>} Question
    */
-  abstract update(questionId: number, question: any): Promise<Question>;
+  abstract update(questionId: string, question: any): Promise<any>;
 
   /**
    * Delete a question
@@ -28,5 +27,5 @@ export abstract class AbstQuestionGateway extends AbstGateway<AbstQuestionUseCas
    * @param questionId Id of question
    * @return {Promise<boolean>} True if delete or False if not delete
    */
-  abstract delete(questionId: number): Promise<boolean>;
+  abstract delete(questionId: string): Promise<boolean>;
 }

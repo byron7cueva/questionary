@@ -20,9 +20,9 @@ export class QuestionGateway extends AbstQuestionGateway {
    * Save a question
    * 
    * @param {any} question Question to save
-   * @return {Promise<Question>} Question
+   * @return {Promise<any>} Question
    */
-  save(question: any): Promise<Question> {
+  save(question: any): Promise<any> {
     const newQuestion: QuestionCreate = {
       ...question
     };
@@ -32,14 +32,14 @@ export class QuestionGateway extends AbstQuestionGateway {
   /**
    * Update a question
    * 
-   * @param {number} questionId Id of question
-   * @param {Promise<Question>} question Question
-   * @return {Promise<Question>} Question
+   * @param {string} questionId Id of question
+   * @param {any} question Question
+   * @return {Promise<any>} Question
    */
-  update(questionId: number, question: any): Promise<Question> {
+  update(questionId: string, question: any): Promise<any> {
     const updateQuestion: Question = {
       ...question,
-      questionId
+      questionId: questionId as unknown as number
     };
     return this.useCase.update(updateQuestion);
   }
@@ -50,8 +50,8 @@ export class QuestionGateway extends AbstQuestionGateway {
    * @param questionId Id of question
    * @return {Promise<boolean>} True if delete or False if not delete
    */
-  delete(questionId: number): Promise<boolean> {
-    return this.useCase.delete(questionId);
+  delete(questionId: string): Promise<boolean> {
+    return this.useCase.delete(questionId as unknown as number);
   }
   
 }
