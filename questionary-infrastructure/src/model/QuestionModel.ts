@@ -23,7 +23,8 @@ QuestionModel.init(
     },
     courseId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      field: 'course_id'
     },
     question: {
       type:new DataTypes.STRING(100),

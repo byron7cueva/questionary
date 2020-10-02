@@ -8,7 +8,7 @@ CourseModel.hasMany(QuestionModel, {
 });
 
 QuestionModel.belongsTo(CourseModel, {
-  targetKey: 'courseId'
+  foreignKey: 'courseId'
 });
 
 export {
