@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { AbstQuestionRepository, Question, QuestionCreate } from 'questionary-domain';
 import { QuestionModel } from '../model';
 
@@ -78,6 +79,23 @@ export class QuestionRepository extends AbstQuestionRepository {
     const result = await QuestionModel.destroy(constraint);
     console.log(result);
     return true;
+  }
+
+  /**
+   * Find questions by like question
+   * 
+   * @param questionQuery Query question to seacrh
+   * @return {Promise<Question[]>} Questions
+   */
+  findByLikeQuestion(questionQuery: string): Promise<Question[]> {
+    const constraint = {
+      where: {
+        question: {
+          [Op.like]: `%${questionQuery}%`
+        }
+      }
+    }
+    return QuestionModel.findAll(constraint);
   }
   
 }

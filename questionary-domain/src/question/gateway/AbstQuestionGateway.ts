@@ -28,4 +28,12 @@ export abstract class AbstQuestionGateway extends AbstGateway<AbstQuestionUseCas
    * @return {Promise<boolean>} True if delete or False if not delete
    */
   abstract delete(questionId: string): Promise<boolean>;
+
+  /**
+   * Return question iinclude query in question
+   * 
+   * @param {string | undefined} questionQuery Query
+   * @return {Promise<any[]>} Collection
+   */
+  abstract findQuestionsIncludeQuery(questionQuery: string | undefined): Promise<any[]>;
 }

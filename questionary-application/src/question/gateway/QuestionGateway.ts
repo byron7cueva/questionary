@@ -53,5 +53,18 @@ export class QuestionGateway extends AbstQuestionGateway {
   delete(questionId: string): Promise<boolean> {
     return this.useCase.delete(questionId as unknown as number);
   }
+
+  /**
+   * Return question iinclude query in question
+   * 
+   * @param {string | undefined} questionQuery Query
+   * @return {Promise<any[]>} Collection
+   */
+  findQuestionsIncludeQuery(questionQuery: string | undefined): Promise<any[]> {
+    if (questionQuery) {
+      return this.useCase.findQuestionsIncludeQuery(questionQuery);
+    }
+    return Promise.resolve([]);
+  }
   
 }

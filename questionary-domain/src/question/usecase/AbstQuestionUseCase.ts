@@ -47,4 +47,12 @@ export abstract class AbstQuestionUseCase extends AbstUseCase<AbstQuestionReposi
    * @return {Promise<boolean>} True if delete if not delete False
    */
   abstract deleteAllByCourseId(courseId: number): Promise<boolean>;
+
+  /**
+   * Find question that include questionQuery in field question
+   * 
+   * @param {string} questionQuery Query to search
+   * @return {Promise<Question[]>} Collection of questions
+   */
+  abstract findQuestionsIncludeQuery(questionQuery: string): Promise<Question[]>;
 }

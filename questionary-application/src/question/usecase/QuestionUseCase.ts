@@ -71,4 +71,14 @@ export class QuestionUseCase extends AbstQuestionUseCase {
   deleteAllByCourseId(courseId: number): Promise<boolean> {
     return this.repository.deleteAllByCourseId(courseId);
   }
+
+  /**
+   * Find question that include questionQuery in field question
+   * 
+   * @param {string} questionQuery Query to search
+   * @return {Promise<Question[]>} Collection of questions
+   */
+  findQuestionsIncludeQuery(questionQuery: string): Promise<Question[]> {
+    return this.repository.findByLikeQuestion(questionQuery);
+  }
 }

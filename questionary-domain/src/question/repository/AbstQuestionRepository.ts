@@ -45,4 +45,12 @@ export abstract class AbstQuestionRepository extends AbstRepository {
    * @return {Promise<boolean>} True if delete questions and False if not delete
    */
   abstract async deleteAllByCourseId(courseId: number): Promise<boolean>;
+
+  /**
+   * Find questions by like question
+   * 
+   * @param questionQuery Query question to seacrh
+   * @return {Promise<Question[]>} Questions
+   */
+  abstract findByLikeQuestion(questionQuery: string): Promise<Question[]>;
 }

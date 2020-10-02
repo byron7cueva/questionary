@@ -8,6 +8,7 @@ const questionsRouter = Router();
 questionsRouter.post('/', saveQuestion);
 questionsRouter.put('/:questionId', updateQuestion);
 questionsRouter.delete('/:questionId', deleteQuestion);
+questionsRouter.get('/', findQuestionIncludeQuery);
 
 
 /* Implements routes */
@@ -61,6 +62,18 @@ async function deleteQuestion(request: Request, response: Response, next: NextFu
     const result = await App.getInstance().questionGateway.delete(questionId);
     response.status(200);
     response.send(result);
+  } catch(error) {
+    next(error);
+  }
+}
+
+async function findQuestionIncludeQuery(request: Request, response: Response, next: NextFunction) {
+  try {
+    let { query: { questionQuery } } = request;
+    questionQuery = questionQuery ? questionQuery as string : undefined;
+    const questions = await App.getInstance().questionGateway.findQuestionsIncludeQuery(questionQuery);
+    response.status(200);
+    response.send(questions);
   } catch(error) {
     next(error);
   }
