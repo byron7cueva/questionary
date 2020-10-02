@@ -1,4 +1,5 @@
 import {injectable, inject} from 'tsyringe';
+import { ErrorUseCase } from 'questionary-common';
 import {
   AbstCourseRepository,
   AbstCourseUseCase,
@@ -31,8 +32,13 @@ export class CourseUseCase extends AbstCourseUseCase {
    * 
    * @return {Promise<Course[]>} List of courses
    */
-  getAll(): Promise<Course[]> {
-    return this.repository.findAll();
+  async getAll(): Promise<Course[]> {
+    try {
+      const courses = await this.repository.findAll();
+      return courses;
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo obtener los cursos', error.stack);
+    }
   }
 
   /**
@@ -41,8 +47,13 @@ export class CourseUseCase extends AbstCourseUseCase {
    * @param {CourseCreate} course Course to save
    * @return {Promise<Course>} Course saved
    */
-  save(course: CourseCreate): Promise<Course> {
-    return this.repository.create(course);
+  async save(course: CourseCreate): Promise<Course> {
+    try {
+      const savedCourse = await this.repository.create(course);
+      return savedCourse;
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo guarda el curso', error.stack);
+    }
   }
 
   /**
@@ -51,8 +62,13 @@ export class CourseUseCase extends AbstCourseUseCase {
    * @param {Course} course Course to update
    * @return {Promise<Course>} Course updated
    */
-  update(course: Course): Promise<Course> {
-    return this.repository.update(course);
+  async update(course: Course): Promise<Course> {
+    try {
+      const updatedCourse = await this.repository.update(course);
+      return updatedCourse;
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo actualizar el curso', error.stack);
+    }
   }
 
   /**
@@ -62,13 +78,16 @@ export class CourseUseCase extends AbstCourseUseCase {
    * @return {Promise<boolean>} True if delete course if not delete False
    */
   async delete(courseId: number): Promise<boolean> {
-    const questions: Question[] = await this._questionUseCase.getQuestionsByCourseId(courseId);
-
-    if (questions && questions.length > 0) {
-      await this._questionUseCase.deleteAllByCourseId(courseId);
+    try {
+      const questions: Question[] = await this._questionUseCase.getQuestionsByCourseId(courseId);
+      if (questions && questions.length > 0) {
+        await this._questionUseCase.deleteAllByCourseId(courseId);
+      }
+      const result = await this.repository.delete(courseId);
+      return result;
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo eliminar el curso', error.stack);
     }
-
-    return this.repository.delete(courseId);
   }
 
   /**
@@ -78,11 +97,15 @@ export class CourseUseCase extends AbstCourseUseCase {
    * @return {Promise<Course>} Course
    */
   async getCourseAndQuestionsById(courseId: number): Promise<Course> {
-    const course = await this.repository.findById(courseId);
-    if (course) {
-      const questions = await this._questionUseCase.getQuestionsByCourseId(courseId);
-      course.questions = questions;
+    try {
+      const course = await this.repository.findById(courseId);
+      if (course) {
+        const questions = await this._questionUseCase.getQuestionsByCourseId(courseId);
+        course.questions = questions;
+      }
+      return course;
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo obtener el curso', error.stack);
     }
-    return course;
   }
 }

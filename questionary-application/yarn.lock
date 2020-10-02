@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"questionary-common@link:../questionary-common":
+  version "0.0.0"
+  uid ""
+
 "questionary-domain@link:../questionary-domain":
   version "0.0.0"
   uid ""

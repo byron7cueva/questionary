@@ -1,5 +1,10 @@
 import { injectable, inject } from 'tsyringe';
 import {
+  ErrorGateway,
+  ServiceResponse,
+  wrapperResponse
+} from 'questionary-common';
+import {
   AbstQuestionGateway,
   AbstQuestionUseCase,
   ContainerToken,
@@ -20,13 +25,14 @@ export class QuestionGateway extends AbstQuestionGateway {
    * Save a question
    * 
    * @param {any} question Question to save
-   * @return {Promise<any>} Question
+   * @return {Promise<ServiceResponse>} Question
    */
-  save(question: any): Promise<any> {
-    const newQuestion: QuestionCreate = {
+  async save(question: any): Promise<ServiceResponse> {
+    let newQuestion: QuestionCreate = {
       ...question
     };
-    return this.useCase.save(newQuestion);
+    newQuestion = await this.useCase.save(newQuestion);
+    return wrapperResponse(newQuestion);
   }
 
   /**
@@ -34,37 +40,40 @@ export class QuestionGateway extends AbstQuestionGateway {
    * 
    * @param {string} questionId Id of question
    * @param {any} question Question
-   * @return {Promise<any>} Question
+   * @return {Promise<ServiceResponse>} Question
    */
-  update(questionId: string, question: any): Promise<any> {
-    const updateQuestion: Question = {
+  async update(questionId: string, question: any): Promise<ServiceResponse> {
+    let updateQuestion: Question = {
       ...question,
       questionId: questionId as unknown as number
     };
-    return this.useCase.update(updateQuestion);
+    updateQuestion = await this.useCase.update(updateQuestion);
+    return wrapperResponse(updateQuestion);
   }
 
   /**
    * Delete a question
    * 
    * @param questionId Id of question
-   * @return {Promise<boolean>} True if delete or False if not delete
+   * @return {Promise<ServiceResponse>} True if delete or False if not delete
    */
-  delete(questionId: string): Promise<boolean> {
-    return this.useCase.delete(questionId as unknown as number);
+  async delete(questionId: string): Promise<ServiceResponse> {
+    const result = await this.useCase.delete(questionId as unknown as number);
+    return wrapperResponse(result);
   }
 
   /**
    * Return question iinclude query in question
    * 
    * @param {string | undefined} questionQuery Query
-   * @return {Promise<any[]>} Collection
+   * @return {Promise<ServiceResponse>} Collection
    */
-  findQuestionsIncludeQuery(questionQuery: string | undefined): Promise<any[]> {
+  async findQuestionsIncludeQuery(questionQuery: string | undefined): Promise<ServiceResponse> {
     if (questionQuery) {
-      return this.useCase.findQuestionsIncludeQuery(questionQuery);
+      const questions = await this.useCase.findQuestionsIncludeQuery(questionQuery);
+      return wrapperResponse(questions);
     }
-    return Promise.resolve([]);
+    throw new ErrorGateway('No se indico el parametro questionQuery');
   }
   
 }

@@ -17,6 +17,7 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
+    "questionary-common": "link:../questionary-common",
     "questionary-domain": "link:../questionary-domain",
     "typescript": "^4.0.3"
   },

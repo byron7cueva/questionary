@@ -1,5 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 import {
+  ServiceResponse,
+  wrapperResponse
+} from 'questionary-common';
+import {
   ContainerToken,
   AbstCourseGateway,
   AbstCourseUseCase,
@@ -27,23 +31,25 @@ export class CourseGateway extends AbstCourseGateway {
   /**
    * Get all courses
    * 
-   * @return {Promise<any[]>} List of courses
+   * @return {Promise<ServiceResponse>} List of courses
    */
-  getAll(): Promise<any[]> {
-    return this.useCase.getAll();
+  async getAll(): Promise<ServiceResponse> {
+    const courses = await this.useCase.getAll();
+    return wrapperResponse(courses);
   }
 
   /**
    * Save a course
    * 
    * @param {any} course Object with info of course
-   * @return {Promise<any>} Course saved
+   * @return {Promise<ServiceResponse>} Course saved
    */
-  save(course: any): Promise<any> {
-    const newCourse: CourseCreate = {
+  async save(course: any): Promise<ServiceResponse> {
+    let newCourse: CourseCreate = {
       ...course
     };
-    return this.useCase.save(newCourse);
+    newCourse = await this.useCase.save(newCourse);
+    return wrapperResponse(newCourse);
   }
 
   /**
@@ -51,33 +57,36 @@ export class CourseGateway extends AbstCourseGateway {
    * 
    * @param {string} courseId Id of course
    * @param {any} course Object with info of course
-   * @return {Promise<any>} Course updated
+   * @return {Promise<ServiceResponse>} Course updated
    */
-  update(courseId: string, course: any): Promise<any> {
-    const updateCourse: Course = {
+  async update(courseId: string, course: any): Promise<ServiceResponse> {
+    let updateCourse: Course = {
       ...course,
       courseId: courseId as unknown as number
     };
-    return this.useCase.update(updateCourse);
+    updateCourse = await this.useCase.update(updateCourse);
+    return wrapperResponse(updateCourse);
   }
 
   /**
    * Delete a course
    * 
    * @param {string} courseId Id of course
-   * @return {Promise<boolean>} True if delete or False if not delete
+   * @return {Promise<ServiceResponse>} True if delete or False if not delete
    */
-  delete(courseId: string): Promise<boolean> {
-    return this.useCase.delete(courseId as unknown as number);
+  async delete(courseId: string): Promise<ServiceResponse> {
+    const result = await this.useCase.delete(courseId as unknown as number);
+    return wrapperResponse(result);
   }
 
   /**
    * Return a course with your questions
    * 
    * @param {string} courseId Id of course
-   * @return {Promise<any>} Course
+   * @return {Promise<ServiceResponse>} Course
    */
-  getCourseWithQuestions(courseId: string): Promise<any> {
-    return this.useCase.getCourseAndQuestionsById(courseId as unknown as number);
+  async getCourseWithQuestions(courseId: string): Promise<ServiceResponse> {
+    const course = await this.useCase.getCourseAndQuestionsById(courseId as unknown as number);
+    return wrapperResponse(course);
   }
 }

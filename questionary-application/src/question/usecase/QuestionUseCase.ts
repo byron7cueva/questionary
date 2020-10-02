@@ -1,4 +1,5 @@
 import {injectable, inject} from 'tsyringe';
+import { ErrorUseCase } from 'questionary-common';
 import {
   ContainerToken,
   AbstQuestionRepository,
@@ -28,8 +29,12 @@ export class QuestionUseCase extends AbstQuestionUseCase {
    * @param {Question} question Question to save
    * @return {Promise<Question>} Question saved
    */
-  save(question: QuestionCreate): Promise<Question> {
-    return this.repository.create(question);
+  async save(question: QuestionCreate): Promise<Question> {
+    try {
+      return await this.repository.create(question);
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo guardar la pregunta', error.stack);
+    }
   }
 
   /**
@@ -38,8 +43,12 @@ export class QuestionUseCase extends AbstQuestionUseCase {
    * @param {Question} question Question to update
    * @return {Promise<Question>} QUestion updated
    */
-  update(question: Question): Promise<Question> {
-    return this.repository.update(question);
+  async update(question: Question): Promise<Question> {
+    try {
+      return await this.repository.update(question);
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo actualizar la pregunta', error.stack);
+    }
   }
 
   /**
@@ -48,8 +57,12 @@ export class QuestionUseCase extends AbstQuestionUseCase {
    * @param {number} questionId Question id
    * @return {Promise<boolean>} True id delete or False if not delete
    */
-  delete(questionId: number): Promise<boolean> {
-    return this.repository.delete(questionId);
+  async delete(questionId: number): Promise<boolean> {
+    try {
+      return await this.repository.delete(questionId);
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo eliminar la pregunta', error.stack);
+    }
   }
 
   /**
@@ -58,8 +71,12 @@ export class QuestionUseCase extends AbstQuestionUseCase {
    * @param {number} courseId Course Id
    * @return {Promise<Question[]>} List of questions
    */
-  getQuestionsByCourseId(courseId: number): Promise<Question[]> {
-    return this.repository.findByCourseId(courseId);
+  async getQuestionsByCourseId(courseId: number): Promise<Question[]> {
+    try {
+      return await this.repository.findByCourseId(courseId);
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo obtener la pregunta', error.stack);
+    }
   }
 
   /**
@@ -68,8 +85,12 @@ export class QuestionUseCase extends AbstQuestionUseCase {
    * @param {number} courseId Course id
    * @return {Promise<boolean>} True if delete if not delete False
    */
-  deleteAllByCourseId(courseId: number): Promise<boolean> {
-    return this.repository.deleteAllByCourseId(courseId);
+  async deleteAllByCourseId(courseId: number): Promise<boolean> {
+    try {
+      return await this.repository.deleteAllByCourseId(courseId);
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo eliminar las preguntas', error.stack);
+    }
   }
 
   /**
@@ -78,7 +99,11 @@ export class QuestionUseCase extends AbstQuestionUseCase {
    * @param {string} questionQuery Query to search
    * @return {Promise<Question[]>} Collection of questions
    */
-  findQuestionsIncludeQuery(questionQuery: string): Promise<Question[]> {
-    return this.repository.findByLikeQuestion(questionQuery);
+  async findQuestionsIncludeQuery(questionQuery: string): Promise<Question[]> {
+    try {
+      return await this.repository.findByLikeQuestion(questionQuery);
+    } catch (error) {
+      throw new ErrorUseCase('No se pudo realizar la busqueda', error.stack);
+    }
   }
 }
