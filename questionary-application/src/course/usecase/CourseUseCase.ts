@@ -10,6 +10,7 @@ import {
 } from 'questionary-domain';
 
 import { ContainerToken } from '../../app/ContainerToken';
+import { Message } from '../../app/Message';
 
 /**
  * Class CourseUseCase
@@ -38,7 +39,7 @@ export class CourseUseCase extends AbstCourseUseCase {
       const courses = await this.repository.findAll();
       return courses;
     } catch (error) {
-      throw new ErrorUseCase('No se pudo obtener los cursos', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('courses_no_find'), error.stack);
     }
   }
 
@@ -53,7 +54,9 @@ export class CourseUseCase extends AbstCourseUseCase {
       const savedCourse = await this.repository.create(course);
       return savedCourse;
     } catch (error) {
-      throw new ErrorUseCase('No se pudo guarda el curso', error.stack);
+      throw new ErrorUseCase(
+        Message.getInstance().getMessage('course_no_save', course.name),
+        error.stack);
     }
   }
 
@@ -68,7 +71,7 @@ export class CourseUseCase extends AbstCourseUseCase {
       const updatedCourse = await this.repository.update(course);
       return updatedCourse;
     } catch (error) {
-      throw new ErrorUseCase('No se pudo actualizar el curso', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('course_no_update', course.courseId), error.stack);
     }
   }
 
@@ -87,7 +90,7 @@ export class CourseUseCase extends AbstCourseUseCase {
       const result = await this.repository.delete(courseId);
       return result;
     } catch (error) {
-      throw new ErrorUseCase('No se pudo eliminar el curso', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('course_no_delete', courseId), error.stack);
     }
   }
 
@@ -106,7 +109,7 @@ export class CourseUseCase extends AbstCourseUseCase {
       }
       return course;
     } catch (error) {
-      throw new ErrorUseCase('No se pudo obtener el curso', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('course_no_find', courseId), error.stack);
     }
   }
 }

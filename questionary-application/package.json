@@ -10,18 +10,22 @@
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "resources"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "prepublish": "npm run build"
   },
   "devDependencies": {
+    "@types/js-yaml": "^3.12.5",
+    "@types/node": "^14.11.2",
     "questionary-common": "link:../questionary-common",
     "questionary-domain": "link:../questionary-domain",
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "js-yaml": "^3.14.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.3.0"
   }

@@ -1,0 +1,13 @@
+course_no_save: No se pudo guardar el curso %s
+course_no_update: No se pudo actualizar el curso con id %d
+course_no_delete: No se pudo eliminar el curso con id %d
+course_no_find: No se pudo realizar la consula del curso con id %d
+courses_no_find: No se pudo raconsulta de los cursos
+question_no_save: No se pudo guardar la pregunta %s
+question_no_update: No se pudo actualizar la pregunta con id %d
+question_no_delete: No se pudo eliminar la pregunta con id %d
+question_no_find: No se pudo realizar la consulta de la pregunta con id %d
+question_no_find_query: No se pudo realizar las consulta de la pregunta que contenga la palabra '%s'
+question_no_query_parameter: No se indico el parametro questionQuery
+questions_no_find: No se pudo realizar la consulta del curso con id %d
+questions_no_delete: No se pudo eliminar las preguntas del curso con id %d

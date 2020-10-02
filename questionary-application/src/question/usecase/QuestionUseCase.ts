@@ -8,6 +8,7 @@ import {
 } from 'questionary-domain';
 
 import { ContainerToken } from '../../app/ContainerToken';
+import { Message } from '../../app/Message';
 
 /**
  * Class implementation of Question use case
@@ -36,7 +37,7 @@ export class QuestionUseCase extends AbstQuestionUseCase {
     try {
       return await this.repository.create(question);
     } catch (error) {
-      throw new ErrorUseCase('No se pudo guardar la pregunta', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('question_no_save', question.question), error.stack);
     }
   }
 
@@ -50,7 +51,7 @@ export class QuestionUseCase extends AbstQuestionUseCase {
     try {
       return await this.repository.update(question);
     } catch (error) {
-      throw new ErrorUseCase('No se pudo actualizar la pregunta', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('question_no_update', question.questionId), error.stack);
     }
   }
 
@@ -64,7 +65,7 @@ export class QuestionUseCase extends AbstQuestionUseCase {
     try {
       return await this.repository.delete(questionId);
     } catch (error) {
-      throw new ErrorUseCase('No se pudo eliminar la pregunta', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('question_no_delete', questionId), error.stack);
     }
   }
 
@@ -78,7 +79,7 @@ export class QuestionUseCase extends AbstQuestionUseCase {
     try {
       return await this.repository.findByCourseId(courseId);
     } catch (error) {
-      throw new ErrorUseCase('No se pudo obtener la pregunta', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('questions_no_find', courseId), error.stack);
     }
   }
 
@@ -92,7 +93,7 @@ export class QuestionUseCase extends AbstQuestionUseCase {
     try {
       return await this.repository.deleteAllByCourseId(courseId);
     } catch (error) {
-      throw new ErrorUseCase('No se pudo eliminar las preguntas', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('questions_no_delete', courseId), error.stack);
     }
   }
 
@@ -106,7 +107,7 @@ export class QuestionUseCase extends AbstQuestionUseCase {
     try {
       return await this.repository.findByLikeQuestion(questionQuery);
     } catch (error) {
-      throw new ErrorUseCase('No se pudo realizar la busqueda', error.stack);
+      throw new ErrorUseCase(Message.getInstance().getMessage('question_no_find_query', questionQuery), error.stack);
     }
   }
 }

@@ -12,6 +12,7 @@ import {
 } from 'questionary-domain';
 
 import { ContainerToken } from '../../app/ContainerToken';
+import { Message } from '../../app/Message';
 
 @injectable()
 export class QuestionGateway extends AbstQuestionGateway {
@@ -74,7 +75,7 @@ export class QuestionGateway extends AbstQuestionGateway {
       const questions = await this.useCase.findQuestionsIncludeQuery(questionQuery);
       return wrapperResponse(questions);
     }
-    throw new ErrorGateway('No se indico el parametro questionQuery');
+    throw new ErrorGateway(Message.getInstance().getMessage('question_no_query_parameter'));
   }
   
 }
