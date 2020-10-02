@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import { App } from '../app/App';
+import { responseHandler } from '../util/responseHandler';
 
 const questionsRouter = Router();
 
@@ -23,9 +24,8 @@ questionsRouter.get('/', findQuestionIncludeQuery);
 async function saveQuestion(request: Request, response: Response, next: NextFunction) {
   try {
     const { body } = request;
-    const question = await App.getInstance().questionGateway.save(body);
-    response.status(201);
-    response.send(question);
+    const responseObject = await App.getInstance().questionGateway.save(body);
+    responseHandler(response, responseObject, 201);
   } catch(error) {
     next(error);
   }
@@ -41,9 +41,8 @@ async function saveQuestion(request: Request, response: Response, next: NextFunc
 async function updateQuestion(request: Request, response: Response, next: NextFunction) {
   try {
     const { body, params: { questionId } } = request;
-    const question = await App.getInstance().questionGateway.update(questionId, body);
-    response.status(200);
-    response.send(question);
+    const responseObject = await App.getInstance().questionGateway.update(questionId, body);
+    responseHandler(response, responseObject);
   } catch(error) {
     next(error);
   }
@@ -59,9 +58,8 @@ async function updateQuestion(request: Request, response: Response, next: NextFu
 async function deleteQuestion(request: Request, response: Response, next: NextFunction) {
   try {
     const { params: { questionId } } = request;
-    const result = await App.getInstance().questionGateway.delete(questionId);
-    response.status(200);
-    response.send(result);
+    const responseObject = await App.getInstance().questionGateway.delete(questionId);
+    responseHandler(response, responseObject);
   } catch(error) {
     next(error);
   }
@@ -71,9 +69,8 @@ async function findQuestionIncludeQuery(request: Request, response: Response, ne
   try {
     let { query: { questionQuery } } = request;
     questionQuery = questionQuery ? questionQuery as string : undefined;
-    const questions = await App.getInstance().questionGateway.findQuestionsIncludeQuery(questionQuery);
-    response.status(200);
-    response.send(questions);
+    const responseObject = await App.getInstance().questionGateway.findQuestionsIncludeQuery(questionQuery);
+    responseHandler(response, responseObject);
   } catch(error) {
     next(error);
   }

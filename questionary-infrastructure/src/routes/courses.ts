@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
 import { App } from '../app/App';
+import { responseHandler } from '../util/responseHandler';
 
 const coursesRouter = Router();
 
@@ -22,9 +23,8 @@ coursesRouter.get('/:courseId', getCourse);
  */
 async function getAllCourses(request: Request, response: Response, next: NextFunction) {
   try {
-    const courses = await App.getInstance().courseGateway.getAll();
-    response.status(200);
-    response.send(courses);
+    const responseObject = await App.getInstance().courseGateway.getAll();
+    responseHandler(response, responseObject);
   } catch(error) {
     next(error);
   }
@@ -39,9 +39,8 @@ async function getAllCourses(request: Request, response: Response, next: NextFun
 async function saveCourse(request: Request, response: Response, next: NextFunction) {
   try {
     const { body } = request;
-    const course = await App.getInstance().courseGateway.save(body);
-    response.status(201);
-    response.send(course);
+    const responseObject = await App.getInstance().courseGateway.save(body);
+    responseHandler(response, responseObject, 201);
   } catch(error) {
     next(error);
   }
@@ -57,9 +56,8 @@ async function saveCourse(request: Request, response: Response, next: NextFuncti
 async function updateCourse(request: Request, response: Response, next: NextFunction) {
   try {
     const { body, params: { courseId } } = request;
-    const course = await App.getInstance().courseGateway.update(courseId, body);
-    response.status(200);
-    response.send(course);
+    const responseObject = await App.getInstance().courseGateway.update(courseId, body);
+    responseHandler(response, responseObject);
   } catch(error) {
     next(error);
   }
@@ -75,9 +73,8 @@ async function updateCourse(request: Request, response: Response, next: NextFunc
 async function deleteCourse(request: Request, response: Response, next: NextFunction) {
   try {
     const { params: { courseId } } = request;
-    const result = await App.getInstance().courseGateway.delete(courseId);
-    response.status(200);
-    response.send(result);
+    const responseObject = await App.getInstance().courseGateway.delete(courseId);
+    responseHandler(response, responseObject);
   } catch(error) {
     next(error);
   }
@@ -93,9 +90,8 @@ async function deleteCourse(request: Request, response: Response, next: NextFunc
 async function getCourse(request: Request, response: Response, next: NextFunction) {
   try {
     const { params: { courseId } } = request;
-    const course = await App.getInstance().courseGateway.getCourseWithQuestions(courseId);
-    response.status(200);
-    response.send(course);
+    const responseObject = await App.getInstance().courseGateway.getCourseWithQuestions(courseId);
+    responseHandler(response, responseObject);
   } catch(error) {
     next(error);
   }

@@ -1,5 +1,7 @@
 import express, { Express, Router } from 'express';
+
 import { serverConfig } from '../config/server';
+import { errorHandler } from '../util/errorHandler';
 
 /**
  * Singleton class Server
@@ -44,6 +46,7 @@ export class Server {
    * Run the server
    */
   run(): void {
+    this._app.use(errorHandler);
     this._app.listen(serverConfig.port);
   }
 
