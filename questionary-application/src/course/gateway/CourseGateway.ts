@@ -4,12 +4,13 @@ import {
   wrapperResponse
 } from 'questionary-common';
 import {
-  ContainerToken,
   AbstCourseGateway,
   AbstCourseUseCase,
   Course,
   CourseCreate
 } from 'questionary-domain';
+
+import { ContainerToken } from '../../app/ContainerToken';
 
 /**
  * Class CourseGateway implementation fof AbstCourseGateway

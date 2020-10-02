@@ -6,9 +6,10 @@ import {
   AbstQuestionUseCase,
   Course,
   CourseCreate,
-  ContainerToken,
   Question
 } from 'questionary-domain';
+
+import { ContainerToken } from '../../app/ContainerToken';
 
 /**
  * Class CourseUseCase

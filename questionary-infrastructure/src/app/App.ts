@@ -1,5 +1,4 @@
-import { ContainerToken } from 'questionary-domain';
-import { AbstApp } from 'questionary-application';
+import { AbstApp, ContainerToken } from 'questionary-application';
 
 import { CourseRepository } from '../repository/CourseRepository';
 import { QuestionRepository } from '../repository/QuestionRespository';

@@ -1,5 +1,5 @@
 import { DependencyContainer, container } from "tsyringe";
-import { ContainerToken } from 'questionary-domain';
+import { ContainerToken } from './ContainerToken';
 
 import { CourseUseCase, CourseGateway } from '../course';
 import { QuestionUseCase, QuestionGateway } from '../question';

@@ -7,10 +7,11 @@ import {
 import {
   AbstQuestionGateway,
   AbstQuestionUseCase,
-  ContainerToken,
   Question,
   QuestionCreate
 } from 'questionary-domain';
+
+import { ContainerToken } from '../../app/ContainerToken';
 
 @injectable()
 export class QuestionGateway extends AbstQuestionGateway {

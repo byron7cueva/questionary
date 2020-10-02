@@ -1,10 +1,13 @@
 import {injectable, inject} from 'tsyringe';
 import { ErrorUseCase } from 'questionary-common';
 import {
-  ContainerToken,
   AbstQuestionRepository,
-  AbstQuestionUseCase, Question, QuestionCreate
+  AbstQuestionUseCase,
+  Question,
+  QuestionCreate
 } from 'questionary-domain';
+
+import { ContainerToken } from '../../app/ContainerToken';
 
 /**
  * Class implementation of Question use case
