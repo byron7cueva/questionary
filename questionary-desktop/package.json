@@ -9,7 +9,9 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "package-linux": "electron-forge package --platform=linux --arch=x64",
+    "make-deb": "electron-forge make --platform=linux --arch=x64 --targets=@electron-forge/maker-deb"
   },
   "keywords": [],
   "author": {
@@ -35,7 +37,13 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "options": {
+              "section": "utils",
+              "maintainer": "byron7cueva",
+              "homepage": "byron7cueva.github.io"
+            }
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
