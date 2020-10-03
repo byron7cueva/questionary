@@ -91,7 +91,7 @@ export class QuestionRepository extends AbstQuestionRepository {
     const constraint = {
       where: {
         question: {
-          [Op.like]: `%${questionQuery}%`
+          [Op.iLike]: `%${questionQuery}%`
         }
       }
     }
