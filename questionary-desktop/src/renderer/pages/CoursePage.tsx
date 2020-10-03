@@ -2,23 +2,22 @@ import debug from 'debug';
 import React, { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
+import { Course, Question, QuestionCreate } from 'questionary-domain';
 
 import { Header } from '../components/Header';
 import { QuestionItem } from '../components/QuestionItem';
 import { Options, Container, Layout } from '../components/Layout';
-import { Course } from '../types/Course';
-import { Question } from '../types/Question';
 import { HttpService } from '../lib/http';
 
 const log = debug('questionary:web:course');
 
 interface ICoursePageParams {
-  idCourse: string;
+  courseId: string;
 }
 
 interface ICursePageState {
   course: Course;
-  newQuestion: Question;
+  newQuestion: QuestionCreate;
   toDelete: Question;
 }
 
@@ -34,9 +33,8 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
   }
 
   handleClickAddQuestion = () => {
-    const newQuestion: Question = {
-      idQuestion: null,
-      idCourse: Number(this.props.match.params.idCourse),
+    const newQuestion: QuestionCreate = {
+      courseId: Number(this.props.match.params.courseId),
       question: '',
       answere: ''
     };
@@ -84,7 +82,7 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
 
   async getCourse() {
     try {
-      const course: Course = await HttpService.getInstance().get(`/courses/${this.props.match.params.idCourse}`);
+      const course: Course = await HttpService.getInstance().get<Course>(`/courses/${this.props.match.params.courseId}`);
       this.setState({course});
     } catch (error) {
       log(error);
@@ -95,13 +93,10 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
   async saveQuestion(question: Question) {
     try {
       if (this.state.newQuestion) {
-        // TODO Remover la asignacion del idQuestion se la pone por el mock API
-        question.idQuestion = Math.floor(Math.random() * 100) + 1;
-        await HttpService.getInstance().post('/questions', question);
+        await HttpService.getInstance().post<Question>('/questions', question);
         this.setState({newQuestion: null});
       } else {
-        // TODO Cambiar el id por idQuestion
-        await HttpService.getInstance().put('/questions', question.id, question);
+        await HttpService.getInstance().put<Question>('/questions', question.questionId.toString(), question);
       }
       this.getCourse();
     } catch (error) {
@@ -114,9 +109,9 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
     const { toDelete } = this.state;
     try {
       if (toDelete) {
-        // TODO Cambiar el id por idQuestion
-        await HttpService.getInstance().delete('/questions', toDelete.id);
+        await HttpService.getInstance().delete<boolean>('/questions', toDelete.questionId.toString());
         this.clearToDelete();
+        this.getCourse();
       }
     } catch (error) {
       log(error);
@@ -132,7 +127,7 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
           {
             course.questions.map((item: Question) => (
               <QuestionItem
-                key={item.idQuestion}
+                key={item.questionId}
                 data={item}
                 isEditable={true}
                 onClickDelete={() => this.handleClickDeleteItem(item)}

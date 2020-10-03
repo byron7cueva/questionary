@@ -12,7 +12,7 @@ const App = (): JSX.Element => (
     <GlobalStyle />
     <Route exact path="/" component={Search} />
     <Route exact path="/courses" component={Courses} />
-    <Route exact path="/courses/:idCourse" component={CoursePage}/>
+    <Route exact path="/courses/:courseId" component={CoursePage}/>
   </MemoryRouter>
 );
 

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
+import { Question, QuestionCreate } from 'questionary-domain';
 
 import { TextArea } from '../TextArea';
 import { ItemContainer } from '../ItemContainer';
-import { Question } from '../../types/Question';
 
 export interface QuestionItemProps {
-  data: Question;
+  data: Question | QuestionCreate;
   isEditable?: boolean;
   editing?: boolean;
   onClickDelete?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickSave?: (question: Question) => void;
+  onClickSave?: (question: Question | QuestionCreate) => void;
   onClickCancelEdit?: () => void;
 }
 
@@ -41,7 +41,7 @@ export const QuestionItem = (props: QuestionItemProps): JSX.Element => {
   }
 
   const handleClickSave = () => {
-    const question: Question = {
+    const question: Question | QuestionCreate = {
       ...props.data,
       question: questionEdit,
       answere: answereEdit

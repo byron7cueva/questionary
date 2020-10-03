@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { Course,CourseCreate } from 'questionary-domain';
 
 import { ItemContainer } from '../ItemContainer';
 import { TextArea } from '../TextArea';
 import { CourseOptions } from './style';
-import { Course } from '../../types/Course';
 
 export interface CourseItemProps {
-  data: Course;
+  data: Course | CourseCreate;
   isEditable: boolean;
   editing?: boolean;
   hideOptionsCourse?: boolean;
   onClickQuestionary?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickSave?: (course: Course) => void;
+  onClickSave?: (course: Course | CourseCreate) => void;
   onClickDelete?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onClickCancelEdit?: () => void;
 }
@@ -41,7 +41,7 @@ export const CourseItem = (props: CourseItemProps): JSX.Element => {
   }
 
   const handleClickSave = () => {
-    const course: Course = {
+    const course: Course | CourseCreate = {
       ...props.data,
       name
     };

@@ -1,3 +1,4 @@
+import { ServiceResponse, TypeServiceResponse } from 'questionary-common';
 import { api } from '../config/constants';
 
 class HttpService {
@@ -15,13 +16,16 @@ class HttpService {
     return HttpService.instance;
   }
 
-  async get(endPoint: string): Promise<unknown> {
+  async get<T>(endPoint: string): Promise<T> {
     const request =  await fetch(`${this.url}${endPoint}`);
-    const data = await request.json();
-    return data;
+    const response: ServiceResponse<T> = await request.json();
+    if (response.type === TypeServiceResponse.SUCCESS) {
+      return response.data
+    }
+    throw new Error(response.message);
   }
 
-  async post(endPoint: string, body: unknown): Promise<unknown> {
+  async post<T>(endPoint: string, body: unknown): Promise<T> {
     const request = await fetch(`${this.url}${endPoint}`, {
       method: 'POST',
       headers: {
@@ -29,11 +33,14 @@ class HttpService {
       },
       body: JSON.stringify(body)
     });
-    const data = await request.json();
-    return data;
+    const response: ServiceResponse<T> = await request.json();
+    if (response.type === TypeServiceResponse.SUCCESS) {
+      return response.data;
+    }
+    throw new Error(response.message);
   }
 
-  async put(endPoint: string, id: string, body: unknown): Promise<unknown> {
+  async put<T>(endPoint: string, id: string, body: unknown): Promise<T> {
     const request = await fetch(`${this.url}${endPoint}/${id}`, {
       method: 'PUT',
       headers: {
@@ -41,16 +48,22 @@ class HttpService {
       },
       body: JSON.stringify(body)
     });
-    const data = await request.json();
-    return data;
+    const response: ServiceResponse<T> = await request.json();
+    if (response.type === TypeServiceResponse.SUCCESS) {
+      return response.data;
+    }
+    throw new Error(response.message);
   }
 
-  async delete(endPoint: string, id: string): Promise<unknown> {
+  async delete<T>(endPoint: string, id: string): Promise<T> {
     const request = await fetch(`${this.url}${endPoint}/${id}`, {
       method: 'DELETE'
     });
-    const data = request.json();
-    return data;
+    const response: ServiceResponse<T> = await request.json();
+    if (response.type === TypeServiceResponse.SUCCESS) {
+      return response.data;
+    }
+    throw new Error(response.message);
   }
 }
 
