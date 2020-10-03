@@ -5,9 +5,6 @@ import { button } from './components/button';
 import { input } from './components/input';
 
 export const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-  }
 
   body {
     background-color: ${Colors.Background};
@@ -15,10 +12,23 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${FontSize.P};
   }
 
-  h1, h2, h3, h4, h5, p {
-    margin: 0;
+  ::-webkit-scrollbar-track
+  {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: ${Colors.Background};
+  }
+  ::-webkit-scrollbar
+  {
+    width: 10px;
   }
 
+  ::-webkit-scrollbar-thumb
+  {
+    background-color: ${Colors.Pink};
+    border: 3px solid ${Colors.Background};
+    border-radius: 20px;
+  }
+  
   h1 {
     font-size: ${FontSize.h1};
   }

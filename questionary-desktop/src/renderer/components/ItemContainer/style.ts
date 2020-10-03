@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Colors } from '../../config/ui';
 
 export const Item = styled.article`
+  max-width: 36rem;
+  margin: 0 auto;
   margin-bottom: 1.5em;
 
   &:hover {
