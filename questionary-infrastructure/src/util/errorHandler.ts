@@ -12,7 +12,7 @@ export function fatalErrorHandler(error: Error): void {
 
 export function errorHandler(error: Error, request: Request, response: Response, next: NextFunction): void {
   log(error.stack);
-  const responseObject: ServiceResponse = {
+  const responseObject: ServiceResponse<any> = {
     type: TypeServiceResponse.ERROR,
     message: error.message
   }

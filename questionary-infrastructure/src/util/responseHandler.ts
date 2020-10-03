@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { ServiceResponse, TypeServiceResponse } from 'questionary-common';
 
-export function responseHandler(response: Response, responseObject: ServiceResponse, statusCode: number = 200): void {
+export function responseHandler(response: Response, responseObject: ServiceResponse<any>, statusCode: number = 200): void {
   switch (responseObject.type) {
     case TypeServiceResponse.SUCCESS:
     case TypeServiceResponse.WARNING:

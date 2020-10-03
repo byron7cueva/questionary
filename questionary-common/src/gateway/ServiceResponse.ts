@@ -10,16 +10,16 @@ export enum TypeServiceResponse {
 /**
  * Servise response
  */
-export interface ServiceResponse {
+export interface ServiceResponse<T> {
   type: TypeServiceResponse;
-  data?: any;
+  data?: T;
   message?: string
 }
 
 export function wrapperResponse(
   data: any,
   type: TypeServiceResponse = TypeServiceResponse.SUCCESS,
-  message?: string): ServiceResponse {
-  const response: ServiceResponse = {type, data, message};
+  message?: string): ServiceResponse<any> {
+  const response: ServiceResponse<any> = {type, data, message};
   return response;
 }
