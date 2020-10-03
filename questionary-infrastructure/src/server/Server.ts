@@ -1,4 +1,5 @@
 import express, { Express, Router } from 'express';
+import cors from 'cors';
 
 import { serverConfig } from '../config/server';
 import { errorHandler } from '../util/errorHandler';
@@ -30,6 +31,7 @@ export class Server {
     this._app = express();
     this._app.use(express.json());
     this._app.use(express.urlencoded({ extended: true }));
+    this._app.use(cors());
   }
 
   /**
