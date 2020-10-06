@@ -8,6 +8,7 @@ import { Header } from '../components/Header';
 import { QuestionItem } from '../components/QuestionItem';
 import { Options, Container, Layout } from '../components/Layout';
 import { HttpService } from '../lib/http';
+import { ILocationState } from '../types/ILocationState';
 
 const log = debug('questionary:web:course');
 
@@ -63,8 +64,8 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
     this.setState({newQuestion: null});
   }
 
-  handleNavigate = (event: IpcRendererEvent, to: string) => {
-    this.props.history.push(to);
+  handleNavigate = (event: IpcRendererEvent, to: string, state: ILocationState) => {
+    this.props.history.push(to, state.modal? {modal: this.props.location} : undefined);
   }
 
   componentDidMount() {

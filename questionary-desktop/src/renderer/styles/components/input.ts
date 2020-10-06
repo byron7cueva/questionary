@@ -15,5 +15,6 @@ export const input = css`
     padding: 0.5em 1em;
     border: 1px solid ${Colors.Purple};
     border-radius: 8px;
+    margin: 1em 0;
   }
 `;

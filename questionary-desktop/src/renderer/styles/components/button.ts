@@ -10,6 +10,7 @@ export const button = css`
     border: none;
     border-radius: 25px;
     cursor: pointer;
+    margin: 0 0.5em;
 
     &.btn-circle {
       display: flex;

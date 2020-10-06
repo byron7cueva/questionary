@@ -1,12 +1,17 @@
 import { ServiceResponse, TypeServiceResponse } from 'questionary-common';
-import { api } from '../config/constants';
+
+import { InitialState } from '../store/types';
+import { store } from '../store/store';
 
 class HttpService {
   private static instance: HttpService;
-  private url: string;
 
-  private constructor() {
-    this.url = api.URL;
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  private getUrl(): string {
+    const state: InitialState = store.getState();
+    return state.settings.urlServer;
   }
 
   static getInstance(): HttpService {
@@ -17,7 +22,7 @@ class HttpService {
   }
 
   async get<T>(endPoint: string): Promise<T> {
-    const request =  await fetch(`${this.url}${endPoint}`);
+    const request =  await fetch(`${this.getUrl()}${endPoint}`);
     const response: ServiceResponse<T> = await request.json();
     if (response.type === TypeServiceResponse.SUCCESS) {
       return response.data
@@ -26,7 +31,7 @@ class HttpService {
   }
 
   async post<T>(endPoint: string, body: unknown): Promise<T> {
-    const request = await fetch(`${this.url}${endPoint}`, {
+    const request = await fetch(`${this.getUrl()}${endPoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +46,7 @@ class HttpService {
   }
 
   async put<T>(endPoint: string, id: string, body: unknown): Promise<T> {
-    const request = await fetch(`${this.url}${endPoint}/${id}`, {
+    const request = await fetch(`${this.getUrl()}${endPoint}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -56,7 +61,7 @@ class HttpService {
   }
 
   async delete<T>(endPoint: string, id: string): Promise<T> {
-    const request = await fetch(`${this.url}${endPoint}/${id}`, {
+    const request = await fetch(`${this.getUrl()}${endPoint}/${id}`, {
       method: 'DELETE'
     });
     const response: ServiceResponse<T> = await request.json();

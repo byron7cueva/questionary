@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+
+import { ILocationState } from '../types/ILocationState';
 
 export function useMenuNavigate (): void {
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     ipcRenderer.on('navigate', handleNavigate);
@@ -13,7 +16,7 @@ export function useMenuNavigate (): void {
     }
   }, []);
 
-  const handleNavigate = (event: IpcRendererEvent, to: string) => {
-    history.push(to);
+  const handleNavigate = (event: IpcRendererEvent, to: string, state: ILocationState) => {
+    history.push(to, state.modal? {modal: location} : undefined);
   }
 }
