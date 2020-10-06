@@ -11,8 +11,8 @@ const Courses = (): JSX.Element => {
   return (
     <Layout>
       <Header
-        title="Listado de materias"
-        subTitle="Materias"
+        title="Curses list"
+        subTitle="Curses"
       />
       <CoursesList />
     </Layout>

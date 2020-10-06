@@ -11,8 +11,8 @@ export const Search = (): JSX.Element => {
   return (
     <Layout>
       <Header
-        subTitle="Buscar"
-        title="Preguntas"
+        subTitle="Search"
+        title="Question"
       />
       <SearchQuestion />
     </Layout>

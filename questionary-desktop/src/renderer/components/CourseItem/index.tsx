@@ -73,7 +73,7 @@ export const CourseItem = (props: CourseItemProps): JSX.Element => {
               className="btn btn-green"
               onClick={props.onClickQuestionary}
             >
-              Cuestionario
+              Questionary
             </button>
           </CourseOptions>   
         )

@@ -140,7 +140,7 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
       )
     } else {
       return (
-        <p> Este curso no tiene preguntas registradas</p>
+        <p>{"This course don't have any questions"}</p>
       )
     }
   }
@@ -154,14 +154,14 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
             <>
               <Header
                 title={course.name}
-                subTitle="Cuestionario"
+                subTitle="Questionary"
               />
               <Options>
                   <button
                     className='btn btn-green'
                     onClick={this.handleClickAddQuestion}
                   >
-                    Agregar pregunta
+                    Add question
                   </button>
               </Options>
               <Container>
@@ -180,7 +180,7 @@ class CourseComponent extends Component<RouteComponentProps<ICoursePageParams>, 
               </Container>
             </>
           ) : (
-            <h1>No existe el curso seleccionado</h1>
+            <h1>{"Don't exist selected course"}</h1>
           )
         }
       </Layout>

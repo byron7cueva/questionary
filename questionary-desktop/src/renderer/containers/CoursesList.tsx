@@ -120,7 +120,7 @@ class Courses extends Component<RouteComponentProps, ICousesListState> {
             className='btn btn-green'
             onClick={this.handleAddCourse}
           >
-            Agregar curso
+            Add course
           </button>
         </Options>
         <Container>
