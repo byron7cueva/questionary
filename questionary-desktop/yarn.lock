@@ -5603,13 +5603,13 @@ querystring@0.2.0, querystring@^0.2.0:
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
-"questionary-common@link:../questionary-common":
-  version "0.0.0"
-  uid ""
+questionary-common@../questionary-common:
+  version "1.0.0"
 
-"questionary-domain@link:../questionary-domain":
-  version "0.0.0"
-  uid ""
+questionary-domain@../questionary-domain:
+  version "1.0.0"
+  dependencies:
+    questionary-common "../questionary-common"
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
