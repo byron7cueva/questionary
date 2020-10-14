@@ -2,8 +2,9 @@
 # yarn lockfile v1
 
 
-questionary-common@../questionary-common:
-  version "1.0.0"
+"questionary-common@link:../questionary-common":
+  version "0.0.0"
+  uid ""
 
 typescript@^4.0.3:
   version "4.0.3"
