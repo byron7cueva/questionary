@@ -27,9 +27,9 @@ export class QuestionGateway extends AbstQuestionGateway {
    * Save a question
    * 
    * @param {any} question Question to save
-   * @return {Promise<ServiceResponse>} Question
+   * @return {Promise<ServiceResponse<any>>} Question
    */
-  async save(question: any): Promise<ServiceResponse> {
+  async save(question: any): Promise<ServiceResponse<any>> {
     let newQuestion: QuestionCreate = {
       ...question
     };
@@ -42,9 +42,9 @@ export class QuestionGateway extends AbstQuestionGateway {
    * 
    * @param {string} questionId Id of question
    * @param {any} question Question
-   * @return {Promise<ServiceResponse>} Question
+   * @return {Promise<ServiceResponse<any>>} Question
    */
-  async update(questionId: string, question: any): Promise<ServiceResponse> {
+  async update(questionId: string, question: any): Promise<ServiceResponse<any>> {
     let updateQuestion: Question = {
       ...question,
       questionId: questionId as unknown as number
@@ -57,9 +57,9 @@ export class QuestionGateway extends AbstQuestionGateway {
    * Delete a question
    * 
    * @param questionId Id of question
-   * @return {Promise<ServiceResponse>} True if delete or False if not delete
+   * @return {Promise<ServiceResponse<boolean>>} True if delete or False if not delete
    */
-  async delete(questionId: string): Promise<ServiceResponse> {
+  async delete(questionId: string): Promise<ServiceResponse<boolean>> {
     const result = await this.useCase.delete(questionId as unknown as number);
     return wrapperResponse(result);
   }
@@ -68,9 +68,9 @@ export class QuestionGateway extends AbstQuestionGateway {
    * Return question iinclude query in question
    * 
    * @param {string | undefined} questionQuery Query
-   * @return {Promise<ServiceResponse>} Collection
+   * @return {Promise<ServiceResponse<any[]>>} Collection
    */
-  async findQuestionsIncludeQuery(questionQuery: string | undefined): Promise<ServiceResponse> {
+  async findQuestionsIncludeQuery(questionQuery: string | undefined): Promise<ServiceResponse<any[]>> {
     if (questionQuery) {
       const questions = await this.useCase.findQuestionsIncludeQuery(questionQuery);
       return wrapperResponse(questions);

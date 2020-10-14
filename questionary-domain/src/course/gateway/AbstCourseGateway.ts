@@ -9,40 +9,40 @@ export abstract class AbstCourseGateway extends AbstGateway<AbstCourseUseCase> {
 
   /**
    * Get all courses
-   * @return {Promise<ServiceResponse>} List of courses
+   * @return {Promise<ServiceResponse<any[]>>} List of courses
    */
-  abstract getAll(): Promise<ServiceResponse>;
+  abstract getAll(): Promise<ServiceResponse<any[]>>;
 
   /**
    * Save a course
    * 
    * @param {any} course Object with info of course
-   * @return {Promise<ServiceResponse>} Course saved
+   * @return {Promise<ServiceResponse<any>>} Course saved
    */
-  abstract async save(course: any): Promise<ServiceResponse>;
+  abstract async save(course: any): Promise<ServiceResponse<any>>;
 
   /**
    * Update a course
    * 
    * @param {string} courseId Id of course
    * @param {any} course Object with info of course
-   * @return {Promise<ServiceResponse>} Course updated
+   * @return {Promise<ServiceResponse<any>>} Course updated
    */
-  abstract async update(courseId: string, course: any): Promise<ServiceResponse>;
+  abstract async update(courseId: string, course: any): Promise<ServiceResponse<any>>;
 
   /**
    * Delete a course
    * 
    * @param {string} courseId Id of course
-   * @return {Promise<ServiceResponse>} True if delete or False if not delete
+   * @return {Promise<ServiceResponse<boolean>>} True if delete or False if not delete
    */
-  abstract delete(courseId: string): Promise<ServiceResponse>;
+  abstract delete(courseId: string): Promise<ServiceResponse<boolean>>;
 
   /**
    * Return a course with your questions
    * 
    * @param {string} courseId Id of course
-   * @return {Promise<ServiceResponse>} Course
+   * @return {Promise<ServiceResponse<any>>} Course
    */
-  abstract getCourseWithQuestions(courseId: string): Promise<ServiceResponse>;
+  abstract getCourseWithQuestions(courseId: string): Promise<ServiceResponse<any>>;
 }

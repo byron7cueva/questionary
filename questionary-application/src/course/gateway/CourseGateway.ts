@@ -32,9 +32,9 @@ export class CourseGateway extends AbstCourseGateway {
   /**
    * Get all courses
    * 
-   * @return {Promise<ServiceResponse>} List of courses
+   * @return {Promise<ServiceResponse<any[]>>} List of courses
    */
-  async getAll(): Promise<ServiceResponse> {
+  async getAll(): Promise<ServiceResponse<any[]>> {
     const courses = await this.useCase.getAll();
     return wrapperResponse(courses);
   }
@@ -43,9 +43,9 @@ export class CourseGateway extends AbstCourseGateway {
    * Save a course
    * 
    * @param {any} course Object with info of course
-   * @return {Promise<ServiceResponse>} Course saved
+   * @return {Promise<ServiceResponse<any>>} Course saved
    */
-  async save(course: any): Promise<ServiceResponse> {
+  async save(course: any): Promise<ServiceResponse<any>> {
     let newCourse: CourseCreate = {
       ...course
     };
@@ -58,9 +58,9 @@ export class CourseGateway extends AbstCourseGateway {
    * 
    * @param {string} courseId Id of course
    * @param {any} course Object with info of course
-   * @return {Promise<ServiceResponse>} Course updated
+   * @return {Promise<ServiceResponse<any>>} Course updated
    */
-  async update(courseId: string, course: any): Promise<ServiceResponse> {
+  async update(courseId: string, course: any): Promise<ServiceResponse<any>> {
     let updateCourse: Course = {
       ...course,
       courseId: courseId as unknown as number
@@ -73,9 +73,9 @@ export class CourseGateway extends AbstCourseGateway {
    * Delete a course
    * 
    * @param {string} courseId Id of course
-   * @return {Promise<ServiceResponse>} True if delete or False if not delete
+   * @return {Promise<ServiceResponse<boolean>>} True if delete or False if not delete
    */
-  async delete(courseId: string): Promise<ServiceResponse> {
+  async delete(courseId: string): Promise<ServiceResponse<boolean>> {
     const result = await this.useCase.delete(courseId as unknown as number);
     return wrapperResponse(result);
   }
@@ -84,9 +84,9 @@ export class CourseGateway extends AbstCourseGateway {
    * Return a course with your questions
    * 
    * @param {string} courseId Id of course
-   * @return {Promise<ServiceResponse>} Course
+   * @return {Promise<ServiceResponse<any>>} Course
    */
-  async getCourseWithQuestions(courseId: string): Promise<ServiceResponse> {
+  async getCourseWithQuestions(courseId: string): Promise<ServiceResponse<any>> {
     const course = await this.useCase.getCourseAndQuestionsById(courseId as unknown as number);
     return wrapperResponse(course);
   }
