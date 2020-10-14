@@ -18,13 +18,13 @@
     "preinstall": "npm run build"
   },
   "devDependencies": {
-    "@types/js-yaml": "^3.12.5",
     "@types/node": "^14.11.2",
     "questionary-common": "link:../questionary-common",
     "questionary-domain": "link:../questionary-domain",
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "@types/js-yaml": "^3.12.5",
     "js-yaml": "^3.14.0",
     "questionary-common": "../questionary-common",
     "questionary-domain": "../questionary-domain",
