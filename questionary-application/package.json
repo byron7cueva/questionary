@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-    "prepublish": "npm run build"
+    "preinstall": "npm run build"
   },
   "devDependencies": {
     "@types/js-yaml": "^3.12.5",
@@ -26,6 +26,8 @@
   },
   "dependencies": {
     "js-yaml": "^3.14.0",
+    "questionary-common": "../questionary-common",
+    "questionary-domain": "../questionary-domain",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.3.0"
   },
