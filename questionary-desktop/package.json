@@ -11,7 +11,8 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts .",
     "package-linux": "electron-forge package --platform=linux --arch=x64",
-    "make-deb": "electron-forge make --platform=linux --arch=x64 --targets=@electron-forge/maker-deb"
+    "make-deb": "electron-forge make --platform=linux --arch=x64 --targets=@electron-forge/maker-deb",
+    "make-win": "electron-forge make --platform=win32 --arch=x64 --targets=@electron-forge/maker-squirrel"
   },
   "keywords": [],
   "author": {
