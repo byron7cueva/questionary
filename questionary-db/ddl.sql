@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS course (
 CREATE TABLE IF NOT EXISTS question (
   question_id INTEGER NOT NULL DEFAULT nextval('question_question_id_seq'),
   course_id INTEGER NOT NULL,
-  question VARCHAR(100) NOT NULL,
+  question VARCHAR(400) NOT NULL,
   answere TEXT NOT NULL
 );
 
