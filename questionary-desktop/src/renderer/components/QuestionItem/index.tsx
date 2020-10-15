@@ -73,7 +73,7 @@ export const QuestionItem = (props: QuestionItemProps): JSX.Element => {
           value={answereEdit}
           onChange={handleChangeEdit}
           editing={editing}
-          fontSize={13}
+          fontSize={14}
         />
     </ItemContainer>
   );

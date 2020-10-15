@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Editable, ReadOnly } from './style';
 
-const INTERLINE = 6;
+const INTERLINE = 8;
 
 export interface TextAreaProps {
   fontSize: number;
@@ -47,7 +47,6 @@ export const TextArea = (props: TextAreaProps): JSX.Element => {
       ) : (
         <ReadOnly
           style={{
-            height:`${height}px`,
             fontSize: `${props.fontSize}px`
           }}
         >
